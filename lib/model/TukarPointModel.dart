@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class TukarPointModel {
   String name;
   String image;
-  double rating;
+  String rating;
   String price;
   String brand;
   String description;

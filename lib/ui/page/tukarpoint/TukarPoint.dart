@@ -35,7 +35,7 @@ class TukarPoint extends StatelessWidget {
                 Text(tukarPoint.price,
                     style: TextStyle(
                         color: Colors.yellow,
-                        fontSize: 18.0,
+                        fontSize: 10.0,
                         fontWeight: FontWeight.bold))
               ],
             ),
@@ -44,7 +44,7 @@ class TukarPoint extends StatelessWidget {
       );
 
   //stack3
-  Widget ratingStack(double rating) => Positioned(
+  Widget ratingStack(String rating) => Positioned(
         top: 0.0,
         left: 0.0,
         child: Container(

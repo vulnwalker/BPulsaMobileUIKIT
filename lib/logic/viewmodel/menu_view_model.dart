@@ -10,11 +10,11 @@ class MenuViewModel {
   getMenuItems() {
     return menuItems = <Menu>[
       Menu(
-        title: "Profile",
-        menuColor: Color(0xff050505),
-        icon: Icons.person,
-        image: UIData.profileImage,
-        targetPage: "View Profile",
+        title: "Task",
+        menuColor: Color(0xff261d33),
+        icon: Icons.dashboard,
+        image: UIData.dashboardImage,
+        targetPage: "Dashboard 1"
       ),
       Menu(
         title: "Tukar Point",
@@ -22,27 +22,27 @@ class MenuViewModel {
         icon: Icons.shopping_cart,
         image: UIData.shoppingImage,
         targetPage: "Tukar Point"
-        ),
-      Menu(
-        title: "Login",
-        menuColor: Color(0xffc7d8f4),
-        icon: Icons.send,
-        image: UIData.loginImage,
-        targetPage: "Shopping List"
       ),
       Menu(
-        title: "Timeline",
+        title: "Payment",
+        menuColor: Color(0xffddcec2),
+        icon: Icons.payment,
+        image: UIData.paymentImage,
+        targetPage: "Credit Card"
+      ),
+      Menu(
+        title: "News",
         menuColor: Color(0xff7f5741),
         icon: Icons.timeline,
         image: UIData.timelineImage,
         targetPage: "Feed"
       ),
       Menu(
-        title: "Dashboard",
-        menuColor: Color(0xff261d33),
-        icon: Icons.dashboard,
-        image: UIData.dashboardImage,
-        targetPage: "Dashboard 1"
+        title: "Profile",
+        menuColor: Color(0xff050505),
+        icon: Icons.person,
+        image: UIData.profileImage,
+        targetPage: "View Profile",
       ),
       Menu(
         title: "Settings",
@@ -52,19 +52,21 @@ class MenuViewModel {
         targetPage: "Device Settings"
       ),
       Menu(
-        title: "No Item",
+        title: "About",
+        menuColor: Color(0xffc7d8f4),
+        icon: Icons.help,
+        image: UIData.loginImage,
+        targetPage: "Shopping List"
+      ),
+      
+      Menu(
+        title: "Logout",
         menuColor: Color(0xffe19b6b),
-        icon: Icons.not_interested,
+        icon: Icons.settings_power,
         image: UIData.blankImage,
         targetPage: "No Search Result"
       ),
-      Menu(
-        title: "Payment",
-        menuColor: Color(0xffddcec2),
-        icon: Icons.payment,
-        image: UIData.paymentImage,
-        targetPage: "Credit Card"
-      ),
+  
     ];
   }
 }
