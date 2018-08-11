@@ -9,13 +9,13 @@ import 'package:bpulsa/ui/page/payment/payment_success_page.dart';
 import 'package:bpulsa/ui/page/profile/profile_one_page.dart';
 import 'package:bpulsa/ui/page/profile/profile_two_page.dart';
 import 'package:bpulsa/ui/page/settings/settings_one_page.dart';
-import 'package:bpulsa/ui/page/shopping/product_detail_page.dart';
-import 'package:bpulsa/ui/page/shopping/shopping_details_page.dart';
-import 'package:bpulsa/ui/page/shopping/shopping_one_page.dart';
+
 import 'package:bpulsa/ui/page/timeline/timeline_one_page.dart';
 import 'package:bpulsa/ui/page/timeline/timeline_two_page.dart';
 import 'package:bpulsa/CheckRoute.dart';
 import 'package:bpulsa/ui/page/tukarpoint/TukarPoint.dart';
+import 'package:bpulsa/ui/page/login/register.dart';
+import 'package:bpulsa/ui/page/task/task.dart';
 
 import 'package:bpulsa/utils/uidata.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -35,6 +35,8 @@ class MyApp extends StatelessWidget {
       //routes
       routes: <String, WidgetBuilder>{
         UIData.checkRoute: (BuildContext context) => CheckRoute(),
+        UIData.registerRoute: (BuildContext context) => Register(),
+        UIData.taskRoute: (BuildContext context) =>Task(),
         UIData.tukarPointRoute: (BuildContext context) => TukarPoint(),
         UIData.homeRoute: (BuildContext context) => HomePage(),
         UIData.profileOneRoute: (BuildContext context) => ProfileOnePage(),
@@ -43,12 +45,6 @@ class MyApp extends StatelessWidget {
         UIData.timelineTwoRoute: (BuildContext context) => TimelineTwoPage(),
         UIData.notFoundRoute: (BuildContext context) => NotFoundPage(),
         UIData.settingsOneRoute: (BuildContext context) => SettingsOnePage(),
-        UIData.shoppingOneRoute: (BuildContext context) => ShoppingOnePage(),
-        UIData.shoppingTwoRoute: (BuildContext context) =>
-            ShoppingDetailsPage(),
-        UIData.shoppingThreeRoute: (BuildContext context) =>
-            ProductDetailPage(),
-        // UIData.loginOneRoute: (BuildContext context) => LoginPage(),
         UIData.loginRoute: (BuildContext context) => LoginPage(),
         UIData.paymentOneRoute: (BuildContext context) => CreditCardPage(),
         UIData.paymentTwoRoute: (BuildContext context) => PaymentSuccessPage(),

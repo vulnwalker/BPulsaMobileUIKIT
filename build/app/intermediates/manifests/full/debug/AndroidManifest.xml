@@ -34,7 +34,7 @@
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:debuggable="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo"
         android:label="BPulsa" >
         <activity
             android:name="com.example.flutteruikit.MainActivity"

@@ -34,23 +34,34 @@ class _LoginPageState extends State<LoginPage> {
       controller: this._emailController,
       keyboardType: TextInputType.emailAddress,
       autofocus: false,
+      style: new TextStyle(color: Colors.white),
       // initialValue: 'vulnwalker@tuyul.online',
       decoration: InputDecoration(
         hintText: 'Email',
+        hintStyle: new TextStyle(color: Colors.white),
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(32.0),
+          borderSide: new BorderSide(color: Colors.lightBlueAccent, style: BorderStyle.solid),
+        ),
       ),
     );
 
     final password = TextFormField(
       controller: this._passController,
       autofocus: false,
-      // initialValue: 'some password',
+      style: new TextStyle(color: Colors.white),
       obscureText: true,
       decoration: InputDecoration(
+        fillColor: Colors.white,
         hintText: 'Password',
+        hintStyle: new TextStyle(color: Colors.white),
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(32.0),
+          borderSide: new BorderSide(color: Colors.lightBlueAccent, style: BorderStyle.solid),
+          
+        ),
       ),
     );
 
@@ -82,7 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                     1,
                   );
                   db.saveAccount(dataAccount);
-                  Navigator.of(context).pushNamed(UIData.homeRoute);
+                  Navigator.of(context).pushReplacementNamed(UIData.homeRoute);
 
                 }else{
                   loginResponse = resp.result.err;
@@ -104,18 +115,15 @@ class _LoginPageState extends State<LoginPage> {
     final registerText = FlatButton(
       child: Text(
         "Don't Have Account ? Click here",
-        style: TextStyle(color: Colors.black54),
+        style: TextStyle(color: Colors.white),
       ),
       onPressed: () {
-        
-            //  Navigator.push(context, new MaterialPageRoute(
-            //         builder: (BuildContext context) => new Register(),
-            //   ));
+        Navigator.of(context).pushNamed(UIData.registerRoute);
       },
     );
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.black87,
       body: Center(
         child: ListView(
           shrinkWrap: true,
