@@ -6,8 +6,8 @@ import 'package:bpulsa/ui/page/login/login.dart';
 import 'package:bpulsa/ui/page/notfound/notfound_page.dart';
 import 'package:bpulsa/ui/page/payment/credit_card_page.dart';
 import 'package:bpulsa/ui/page/payment/payment_success_page.dart';
-import 'package:bpulsa/ui/page/profile/profile_one_page.dart';
-import 'package:bpulsa/ui/page/profile/profile_two_page.dart';
+import 'package:bpulsa/ui/page/profile/profile.dart';
+import 'package:bpulsa/ui/page/profile/EditProfile.dart';
 import 'package:bpulsa/ui/page/settings/settings_one_page.dart';
 
 import 'package:bpulsa/ui/page/timeline/timeline_one_page.dart';
@@ -34,13 +34,14 @@ class MyApp extends StatelessWidget {
 
       //routes
       routes: <String, WidgetBuilder>{
+        UIData.logoutRoute: (BuildContext context) => LoginPage(),
+        UIData.profileRoute: (BuildContext context) => Profile(),
+        UIData.editProfileRoute: (BuildContext context) => EditProfile(),
         UIData.checkRoute: (BuildContext context) => CheckRoute(),
         UIData.registerRoute: (BuildContext context) => Register(),
         UIData.taskRoute: (BuildContext context) =>Task(),
         UIData.tukarPointRoute: (BuildContext context) => TukarPoint(),
         UIData.homeRoute: (BuildContext context) => HomePage(),
-        UIData.profileOneRoute: (BuildContext context) => ProfileOnePage(),
-        UIData.profileTwoRoute: (BuildContext context) => ProfileTwoPage(),
         UIData.timelineOneRoute: (BuildContext context) => TimelineOnePage(),
         UIData.timelineTwoRoute: (BuildContext context) => TimelineTwoPage(),
         UIData.notFoundRoute: (BuildContext context) => NotFoundPage(),

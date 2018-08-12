@@ -18,7 +18,23 @@ class _LoginPageState extends State<LoginPage> {
   String email,password = "";
   final TextEditingController _emailController = new TextEditingController();
   final TextEditingController _passController = new TextEditingController();
+  var databaseHelper = new  DatabaseHelper() ;
+  void logoutProcess() async{
+     databaseHelper.deleteAccount();
 
+
+  }
+  @override
+  void initState() {
+    super.initState();
+    (() async {
+        await logoutProcess();
+        setState(() {
+                  
+        });
+    })();
+  
+  }
   @override
   Widget build(BuildContext context) {
     final logo = Hero(

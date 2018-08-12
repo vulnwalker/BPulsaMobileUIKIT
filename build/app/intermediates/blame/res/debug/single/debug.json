@@ -76,12 +76,12 @@
         "source": "/root/.gradle/caches/transforms-1/files-1.1/play-services-base-15.0.1.aar/3771d36df098702d0b6437466dccc368/res/drawable-mdpi-v4/common_google_signin_btn_icon_light_normal_background.9.png"
     },
     {
-        "merged": "/home/kszxpo/AndroidStudioProjects/BPulsa/build/app/intermediates/res/merged/debug/layout_notification_template_part_time.xml.flat",
-        "source": "/root/.gradle/caches/transforms-1/files-1.1/support-compat-26.1.0.aar/4d2fadbffa6d4e3a88a085d61fc215fd/res/layout/notification_template_part_time.xml"
-    },
-    {
         "merged": "/home/kszxpo/AndroidStudioProjects/BPulsa/build/app/intermediates/res/merged/debug/drawable-hdpi-v4_notification_bg_normal.9.png.flat",
         "source": "/root/.gradle/caches/transforms-1/files-1.1/support-compat-26.1.0.aar/4d2fadbffa6d4e3a88a085d61fc215fd/res/drawable-hdpi-v4/notification_bg_normal.9.png"
+    },
+    {
+        "merged": "/home/kszxpo/AndroidStudioProjects/BPulsa/build/app/intermediates/res/merged/debug/layout_notification_template_part_time.xml.flat",
+        "source": "/root/.gradle/caches/transforms-1/files-1.1/support-compat-26.1.0.aar/4d2fadbffa6d4e3a88a085d61fc215fd/res/layout/notification_template_part_time.xml"
     },
     {
         "merged": "/home/kszxpo/AndroidStudioProjects/BPulsa/build/app/intermediates/res/merged/debug/mipmap-xxxhdpi_ic_launcher_round.png.flat",
@@ -96,12 +96,12 @@
         "source": "/root/.gradle/caches/transforms-1/files-1.1/support-compat-26.1.0.aar/4d2fadbffa6d4e3a88a085d61fc215fd/res/drawable-hdpi-v4/notify_panel_notification_icon_bg.png"
     },
     {
-        "merged": "/home/kszxpo/AndroidStudioProjects/BPulsa/build/app/intermediates/res/merged/debug/drawable_common_google_signin_btn_icon_dark_normal.xml.flat",
-        "source": "/root/.gradle/caches/transforms-1/files-1.1/play-services-base-15.0.1.aar/3771d36df098702d0b6437466dccc368/res/drawable/common_google_signin_btn_icon_dark_normal.xml"
-    },
-    {
         "merged": "/home/kszxpo/AndroidStudioProjects/BPulsa/build/app/intermediates/res/merged/debug/drawable-xxhdpi-v4_common_google_signin_btn_text_dark_normal_background.9.png.flat",
         "source": "/root/.gradle/caches/transforms-1/files-1.1/play-services-base-15.0.1.aar/3771d36df098702d0b6437466dccc368/res/drawable-xxhdpi-v4/common_google_signin_btn_text_dark_normal_background.9.png"
+    },
+    {
+        "merged": "/home/kszxpo/AndroidStudioProjects/BPulsa/build/app/intermediates/res/merged/debug/drawable_common_google_signin_btn_icon_dark_normal.xml.flat",
+        "source": "/root/.gradle/caches/transforms-1/files-1.1/play-services-base-15.0.1.aar/3771d36df098702d0b6437466dccc368/res/drawable/common_google_signin_btn_icon_dark_normal.xml"
     },
     {
         "merged": "/home/kszxpo/AndroidStudioProjects/BPulsa/build/app/intermediates/res/merged/debug/drawable_notification_bg_low.xml.flat",

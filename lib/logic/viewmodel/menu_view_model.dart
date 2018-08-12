@@ -14,7 +14,7 @@ class MenuViewModel {
         menuColor: Color(0xff261d33),
         icon: Icons.dashboard,
         image: UIData.dashboardImage,
-        targetPage: "Dashboard 1"
+        targetPage: "task"
       ),
       Menu(
         title: "Tukar Point",
@@ -42,7 +42,7 @@ class MenuViewModel {
         menuColor: Color(0xff050505),
         icon: Icons.person,
         image: UIData.profileImage,
-        targetPage: "View Profile",
+        targetPage: "profile",
       ),
       Menu(
         title: "Settings",
@@ -64,7 +64,7 @@ class MenuViewModel {
         menuColor: Color(0xffe19b6b),
         icon: Icons.settings_power,
         image: UIData.blankImage,
-        targetPage: "No Search Result"
+        targetPage: "logout"
       ),
   
     ];

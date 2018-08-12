@@ -1,0 +1,290 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:bpulsa/ui/page/dashboard/dashboard_one/dashboard_menu_row.dart';
+import 'package:bpulsa/ui/widgets/login_background.dart';
+import 'package:bpulsa/ui/widgets/profile_tile.dart';
+import 'package:bpulsa/utils/uidata.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:bpulsa/config.dart';
+import 'package:firebase_admob/firebase_admob.dart';
+
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+//Database
+import 'package:bpulsa/database/DatabaseHelper.dart';
+import 'package:flushbar/flushbar.dart';
+
+const APP_ID = "<Put in your Device ID>";
+class Task extends StatefulWidget {
+  ConfigClass configClass = new ConfigClass();
+  @override
+  TaskState createState() {
+    return new TaskState();
+  }
+
+}
+
+class TaskState extends State<Task> {
+   static final MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
+    testDevices: APP_ID != null ? [APP_ID] : null,
+    keywords: ['Games', 'Puzzles'],
+  );
+  Size deviceSize;
+  String emailMember,namaMember;
+  int saldoMember;
+  BannerAd bannerAd;
+  InterstitialAd interstitialAd;
+  RewardedVideoAd rewardedVideoAd;
+  var databaseHelper = new  DatabaseHelper() ;
+  void getDataAccount() async{
+    var dbClient = await databaseHelper.db;
+    List<Map> list = await dbClient.rawQuery('SELECT * FROM tabel_account');
+    namaMember = list[0]["nama"];
+    emailMember = list[0]["email"];
+    saldoMember = list[0]["saldo"];
+  }
+  BannerAd buildBanner() {
+    return BannerAd(
+        adUnitId: BannerAd.testAdUnitId,
+        size: AdSize.banner,
+        listener: (MobileAdEvent event) {
+          print(event);
+        });
+  }
+
+  InterstitialAd buildInterstitial() {
+    return InterstitialAd(
+        adUnitId: InterstitialAd.testAdUnitId,
+        targetingInfo: targetingInfo,
+        listener: (MobileAdEvent event) {
+          if (event == MobileAdEvent.failedToLoad) {
+            interstitialAd..load();
+          } else if (event == MobileAdEvent.closed) {
+            interstitialAd = buildInterstitial()..load();
+          }
+          print(event);
+        });
+  }
+  void loadVideoAds() {
+    RewardedVideoAd.instance.load(
+      adUnitId: RewardedVideoAd.testAdUnitId,
+      targetingInfo: targetingInfo,
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    (() async {
+      var asu = await getDataAccount();
+      setState(() {
+      });
+    })();
+
+    FirebaseAdMob.instance.initialize(appId: FirebaseAdMob.testAppId);
+    bannerAd = buildBanner()..load();
+    interstitialAd = buildInterstitial()..load();
+    // loadVideoAds();
+    
+    RewardedVideoAd.instance.listener =
+        (RewardedVideoAdEvent event, {String rewardType, int rewardAmount}) {
+      print("RewardedVideoAd event $event");
+      if (event == RewardedVideoAdEvent.failedToLoad) {
+        widget.configClass.closeLoading(context);
+        AlertDialog dialog = new AlertDialog(
+            content: new Text("Gagal Load Video")
+        );
+        showDialog(context: context,child: dialog);
+        print("Gagal Load Video");
+
+        // loadVideoAds();
+      }else if(event == RewardedVideoAdEvent.loaded){
+        widget.configClass.closeLoading(context);
+        RewardedVideoAd.instance.show();
+        print("Iklan terload");
+      }
+    };
+   
+
+  }
+@override
+  void dispose() {
+    bannerAd?.dispose();
+    interstitialAd?.dispose();
+    super.dispose();
+  }
+
+    
+
+  @override
+  Widget build(BuildContext context) {
+    deviceSize = MediaQuery.of(context).size;
+    
+     @override
+     Widget appBarColumn(BuildContext context) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 18.0),
+          child: new Column(
+            children: <Widget>[
+              new Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  new IconButton(
+                    icon: new Icon(
+                      defaultTargetPlatform == TargetPlatform.android
+                          ? Icons.arrow_back
+                          : Icons.arrow_back_ios,
+                      color: Colors.white,
+                    ),
+                    onPressed: () => Navigator.canPop(context)
+                        ? Navigator.pop(context)
+                        : null,
+                  ),
+                  new ProfileTile(
+                    title: "Hi, "+namaMember,
+                    subtitle: "Welcome to the "+ widget.configClass.app_name,
+                    textColor: Colors.white,
+                  ),
+                  new IconButton(
+                    icon: new Icon(
+                      Icons.do_not_disturb,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      AlertDialog dialog = new AlertDialog(
+                        content: new Text("Reload Activity")
+                      );
+                      showDialog(context: context,child: dialog);
+                    },
+                  )
+                ],
+              ),
+            ],
+          ),
+        ),
+      );
+
+     
+     Widget actionMenuCard() => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Card(
+          elevation: 2.0,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  DashboardMenuRow(
+                    firstIcon: FontAwesomeIcons.film,
+                    firstLabel: "Video",
+                    firstIconCircleColor: Colors.blue,
+                    secondIcon: FontAwesomeIcons.film,
+                    secondLabel: "Video II",
+                    secondIconCircleColor: Colors.orange,
+                    thirdIcon: FontAwesomeIcons.film,
+                    thirdLabel: "Video III",
+                    thirdIconCircleColor: Colors.purple,
+                    fourthIcon: FontAwesomeIcons.locationArrow,
+                    fourthLabel: "Absen",
+                    fourthIconCircleColor: Colors.indigo,
+                  ),
+                  DashboardMenuRow(
+                    firstIcon: FontAwesomeIcons.images,
+                    firstLabel: "Albums",
+                    firstIconCircleColor: Colors.red,
+                    secondIcon: FontAwesomeIcons.solidHeart,
+                    secondLabel: "Likes",
+                    secondIconCircleColor: Colors.teal,
+                    thirdIcon: FontAwesomeIcons.solidNewspaper,
+                    thirdLabel: "Articles",
+                    thirdIconCircleColor: Colors.lime,
+                    fourthIcon: FontAwesomeIcons.solidCommentDots,
+                    fourthLabel: "Reviews",
+                    fourthIconCircleColor: Colors.amber,
+                  ),
+                  DashboardMenuRow(
+                    firstIcon: FontAwesomeIcons.footballBall,
+                    firstLabel: "Sports",
+                    firstIconCircleColor: Colors.cyan,
+                    secondIcon: FontAwesomeIcons.solidStar,
+                    secondLabel: "Fav",
+                    secondIconCircleColor: Colors.redAccent,
+                    thirdIcon: FontAwesomeIcons.blogger,
+                    thirdLabel: "Blogs",
+                    thirdIconCircleColor: Colors.pink,
+                    fourthIcon: FontAwesomeIcons.wallet,
+                    fourthLabel: "Wallet",
+                    fourthIconCircleColor: Colors.brown,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+
+  Widget balanceCard() => Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Card(
+          elevation: 2.0,
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      "Point",
+                      style: TextStyle(fontFamily: UIData.ralewayFont),
+                    ),
+                    
+                  ],
+                ),
+                Text(
+                  "₹ "+saldoMember.toString(),
+                  style: TextStyle(
+                      fontFamily: UIData.ralewayFont,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.green,
+                      fontSize: 25.0),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    Widget allCards(BuildContext context) => SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          appBarColumn(context),
+          SizedBox(
+            height: deviceSize.height * 0.01,
+          ),
+          SizedBox(
+            height: deviceSize.height * 0.01,
+          ),
+          actionMenuCard(),
+          SizedBox(
+            height: deviceSize.height * 0.01,
+          ),
+          balanceCard(),
+        ],
+      ),
+    );
+    bannerAd.show();
+    return Scaffold(
+        body:  Stack(
+                fit: StackFit.expand,
+                children: <Widget>[
+                  LoginBackground(
+                    showIcon: false,
+                  ),
+                  allCards(context),
+                ],
+              )
+    );
+  }
+}

@@ -26,6 +26,12 @@ class ConfigClass {
   String absesnHarian(){
     return getHostName()+"task/absen";
   }
+  String requestAds(){
+    return getHostName()+"ads";
+  }
+  String getReward(){
+    return getHostName()+"ads/reward";
+  }
   var loadingScreen = new ProgressHUD(
       backgroundColor: Colors.black12,
       color: Colors.white,

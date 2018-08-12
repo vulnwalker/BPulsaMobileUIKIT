@@ -154,8 +154,13 @@ class HomePage extends StatelessWidget {
         ),
       );
 
-  void _showModalBottomSheet(BuildContext context, Menu menu) {
-    Navigator.pushNamed(context, "/${menu.targetPage}");
+  void _showModalBottomSheet(BuildContext context, Menu menu) { 
+    if(menu.targetPage == "logout"){
+       Navigator.pushReplacementNamed(context, "/${menu.targetPage}");
+    }else{
+      Navigator.pushNamed(context, "/${menu.targetPage}");
+    }
+    
     // showModalBottomSheet(
     //     context: context,
     //     builder: (context) => Material(

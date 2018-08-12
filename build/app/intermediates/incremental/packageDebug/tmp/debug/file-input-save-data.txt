@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Mon Aug 06 23:00:30 WIB 2018
+#Sun Aug 12 22:47:12 WIB 2018
 17.baseType=DIRECTORY
 4.path=flutter_assets/fonts/MaterialIcons-Regular.ttf
 25.base=/home/kszxpo/AndroidStudioProjects/BPulsa/build/app/intermediates/assets/debug
@@ -18,7 +18,7 @@
 count=34
 32.baseType=DIRECTORY
 6.base=/home/kszxpo/AndroidStudioProjects/BPulsa/build/app/intermediates/assets/debug
-13.path=flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf
+13.path=flutter_assets/assets/logo.png
 6.baseType=DIRECTORY
 2.set=ASSET
 5.path=flutter_assets/packages/font_awesome_flutter/lib/fonts/fa-regular-400.ttf
@@ -38,7 +38,7 @@ count=34
 26.set=ASSET
 30.path=flutter_assets/packages/font_awesome_flutter/lib/fonts/fa-solid-900.ttf
 7.base=/home/kszxpo/AndroidStudioProjects/BPulsa/build/app/intermediates/assets/debug
-14.path=flutter_assets/assets/logo.png
+14.path=flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf
 15.set=ASSET
 6.path=flutter_assets/assets/images/timeline.jpeg
 27.base=/home/kszxpo/AndroidStudioProjects/BPulsa/build/app/intermediates/assets/debug

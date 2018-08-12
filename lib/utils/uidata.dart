@@ -6,11 +6,12 @@ import 'package:flutter/material.dart';
 class UIData {
   //routes
   static const String checkRoute = "/check";
+  static const String logoutRoute = "/logout";
   static const String taskRoute = "/task";
   static const String homeRoute = "/home";
   static const String registerRoute = "/register";
-  static const String profileOneRoute = "/View Profile";
-  static const String profileTwoRoute = "/Profile 2";
+  static const String profileRoute = "/profile";
+  static const String editProfileRoute = "/editProfile";
   static const String notFoundRoute = "/No Search Result";
   static const String timelineOneRoute = "/Feed";
   static const String timelineTwoRoute = "/Tweets";

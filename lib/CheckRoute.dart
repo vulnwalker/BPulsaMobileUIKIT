@@ -6,7 +6,6 @@ import 'package:bpulsa/utils/uidata.dart';
 ConfigClass configClass = new ConfigClass();
 class CheckRoute extends StatefulWidget {
   var databaseHelper = new  DatabaseHelper() ;
-
   @override
   _CheckRouteState createState() => _CheckRouteState();
 }
