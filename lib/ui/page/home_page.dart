@@ -6,6 +6,7 @@ import 'package:bpulsa/ui/widgets/about_tile.dart';
 import 'package:bpulsa/ui/widgets/profile_tile.dart';
 import 'package:bpulsa/utils/uidata.dart';
 import 'package:flutter/foundation.dart';
+import 'package:bpulsa/database/DatabaseHelper.dart';
 
 class HomePage extends StatelessWidget {
   final _scaffoldState = GlobalKey<ScaffoldState>();
@@ -156,6 +157,8 @@ class HomePage extends StatelessWidget {
 
   void _showModalBottomSheet(BuildContext context, Menu menu) { 
     if(menu.targetPage == "logout"){
+       var databaseHelper = new  DatabaseHelper() ;
+       databaseHelper.deleteAccount();
        Navigator.pushReplacementNamed(context, "/${menu.targetPage}");
     }else{
       Navigator.pushNamed(context, "/${menu.targetPage}");

@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'package:bpulsa/database/DatabaseHelper.dart';
 import 'package:bpulsa/database/model/account.dart';
 import 'package:bpulsa/utils/uidata.dart';
+import 'package:bpulsa/ui/page/home_page.dart';
 ConfigClass configClass = new ConfigClass();
 class EditProfile extends StatefulWidget {
   @override
@@ -14,15 +15,18 @@ class EditProfile extends StatefulWidget {
 
 class EditProfileState extends State<EditProfile> {
   String email,password,passwordConfirm,nama,nomorTelepon = "";
-
+  String oldEmail ;
   ConfigClass configClass = new ConfigClass();
   var databaseHelper = new  DatabaseHelper() ;
 
   void getDataAccount() async{
     var dbClient = await databaseHelper.db;
         List<Map> list = await dbClient.rawQuery('SELECT * FROM tabel_account');
-        email = list[0]["nama"];
-        nama = list[0]["email"];
+        email = list[0]["email"];
+        nama = list[0]["nama"];
+        oldEmail = list[0]["email"];
+        password = list[0]["password"];
+        passwordConfirm = list[0]["password"];
         nomorTelepon = list[0]["nomor_telepon"]; 
   }
   @override
@@ -41,7 +45,7 @@ class EditProfileState extends State<EditProfile> {
     return new Scaffold(
       appBar: new AppBar(
         backgroundColor: Colors.black,
-        title: new Text("EditProfile"),
+        title: new Text("Edit Profile"),
         actions: <Widget>[
           new IconButton(icon: const Icon(Icons.save), onPressed: () {
             if(email!="" && password != "" && passwordConfirm != "" && nama != "" && nomorTelepon != ""){
@@ -57,30 +61,32 @@ class EditProfileState extends State<EditProfile> {
                   "password": passwordConfirm,
                   "nama": nama,
                   "nomorTelepon": nomorTelepon,
+                  "oldEmail": oldEmail,
                   };
-                http.post(configClass.register(), body: dataPost).then((response) {
+                http.post(configClass.editProfile(), body: dataPost).then((response) {
                     configClass.closeLoading(context);
                     final jsonResponse = json.decode(response.body.toString());
                     String loginResponse ;
                     Resp resp = new Resp.fromJson(jsonResponse);
-                    print("Welcome "+ resp.result.content.nama.toString());
                     if(resp.result.err == ''){
                       var db = new DatabaseHelper();
+                     
                       var dataAccount = new Account(
                         email,
                         password,
                         resp.result.content.nama,
                         resp.result.content.nomor_telepon,
-                        0,
+                        int.tryParse(resp.result.content.saldo),
                         1,
                       );
-                      db.saveAccount(dataAccount);
+                      db.updateAccount(dataAccount);
                       AlertDialog dialog = new AlertDialog(
-                        content: new Text("EditProfile Success")
+                        content: new Text("Update Profile Success")
                       );
                       showDialog(context: context,child: dialog);
-                      Navigator.of(context).pushReplacementNamed(UIData.homeRoute);
-
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                      
                     }else{
                       loginResponse = resp.result.err;
                       AlertDialog dialog = new AlertDialog(
@@ -105,7 +111,7 @@ class EditProfileState extends State<EditProfile> {
       body: new Column(
         children: <Widget>[
           new ListTile(
-            leading: const Icon(Icons.person),
+            leading: const Icon(Icons.email),
             title: new TextField(
               onChanged: (String text) {
                 email = text;
@@ -126,6 +132,9 @@ class EditProfileState extends State<EditProfile> {
               onChanged: (String text) {
                 password = text;
               },
+              controller: TextEditingController(
+                text: password
+              ),
               obscureText: true,
               autofocus: false,
               decoration: InputDecoration(
@@ -139,6 +148,9 @@ class EditProfileState extends State<EditProfile> {
               onChanged: (String text) {
                 passwordConfirm = text;
               },
+              controller: TextEditingController(
+                text: passwordConfirm
+              ),
               obscureText: true,
               autofocus: false,
               decoration: InputDecoration(

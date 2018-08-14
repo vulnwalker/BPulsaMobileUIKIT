@@ -105,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                     _passController.text,
                     resp.result.content.nama,
                     resp.result.content.nomor_telepon,
-                    200,
+                    int.tryParse(resp.result.content.saldo),
                     1,
                   );
                   db.saveAccount(dataAccount);

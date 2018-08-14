@@ -14,7 +14,7 @@ class TukarPointBloc {
       List dataContent;
       List<TukarPointModel> kolom = [];
       (() async {
-        await http.post(configClass.daftarTukarPoint(), body: {"email":"vulnwalker@tuyul.online", "password": "rf09thebye"}).then((response) {
+        await http.post(configClass.daftarTukarPoint(), body: {"email":"vulnwalker@tuyul.online"}).then((response) {
             kolom = [];
             var extractdata = JSON.decode(response.body);
             dataResult = extractdata["result"];
@@ -22,6 +22,7 @@ class TukarPointBloc {
             for (var i = 0; i < dataContent.length; i++) {
                kolom.add( 
                   TukarPointModel(
+                          id_trade_point: dataContent[i]['id'],
                           brand: "PULSA",
                           description: dataContent[i]['description'],
                           image:dataContent[i]['gambar'],

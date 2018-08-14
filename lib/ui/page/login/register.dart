@@ -84,7 +84,7 @@ class RegisterState extends State<Register> {
       body: new Column(
         children: <Widget>[
           new ListTile(
-            leading: const Icon(Icons.person),
+            leading: const Icon(Icons.email),
             title: new TextField(
               onChanged: (String text) {
                 email = text;

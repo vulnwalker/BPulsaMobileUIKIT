@@ -11,8 +11,11 @@ class ConfigClass {
   String auth(){
     return getHostName()+"auth";
   }
+  String syncData(){
+    return getHostName()+"member/sync";
+  }
   String register(){
-    return getHostName()+"register";
+    return getHostName()+"member/add";
   }
   String editProfile(){
     return getHostName()+"member/update";
@@ -31,6 +34,9 @@ class ConfigClass {
   }
   String getReward(){
     return getHostName()+"ads/reward";
+  }
+  String tradePoint(){
+    return getHostName()+"point/trade";
   }
   var loadingScreen = new ProgressHUD(
       backgroundColor: Colors.black12,

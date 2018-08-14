@@ -10,6 +10,7 @@ import 'package:bpulsa/config.dart';
 import 'package:bpulsa/utils/uidata.dart';
 
 class Profile extends StatefulWidget {
+  BuildContext context;
   @override
   ProfileState createState() {
     return new ProfileState();
@@ -41,6 +42,17 @@ class ProfileState extends State<Profile> {
         });
     })();
   
+  }
+  @override
+  void didChangeDependencies() {
+        (() async {
+         await getDataAccount();
+        setState(() {
+                  
+        });
+    })();
+    super.didChangeDependencies();
+    
   }
 
    //Column1

@@ -2,10 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:bpulsa/logic/bloc/TukarPointBloc.dart';
 import 'package:bpulsa/model/TukarPointModel.dart';
 import 'package:bpulsa/ui/widgets/common_scaffold.dart';
-
+import 'package:flushbar/flushbar.dart';
+import 'package:bpulsa/config.dart';
+import 'package:bpulsa/utils/uidata.dart';
+import 'package:http/http.dart' as http;
+import 'package:bpulsa/database/DatabaseHelper.dart';
+import 'dart:convert';
+import 'package:bpulsa/database/model/account.dart';
 class TukarPoint extends StatelessWidget {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  String email,password,passwordConfirm,nama,nomorTelepon = "";
+  String oldEmail ;
+  int saldoMember;
+  ConfigClass configClass = new ConfigClass();
+  var databaseHelper = new  DatabaseHelper() ;
 
+  void getDataAccount() async{
+    var dbClient = await databaseHelper.db;
+        List<Map> list = await dbClient.rawQuery('SELECT * FROM tabel_account');
+        email = list[0]["email"];
+        nama = list[0]["nama"];
+        oldEmail = list[0]["email"];
+        password = list[0]["password"];
+        passwordConfirm = list[0]["password"];
+        nomorTelepon = list[0]["nomor_telepon"]; 
+        saldoMember = list[0]["saldo"]; 
+  }
   //stack1
   Widget imageStack(String img) => Image.network(
         img,
@@ -73,7 +95,7 @@ class TukarPoint extends StatelessWidget {
         ),
       );
 
-  Widget tukarPointGrid(List<TukarPointModel> tukarPointModels) => GridView.count(
+  Widget tukarPointGrid(List<TukarPointModel> tukarPointModels,context) => GridView.count(
         crossAxisCount: 2,
         shrinkWrap: true,
         children: tukarPointModels
@@ -81,7 +103,7 @@ class TukarPoint extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: InkWell(
                     splashColor: Colors.yellow,
-                    onDoubleTap: () => showSnackBar(),
+                    onTap: () => showFlushBar(tukarPoint,context),
                     child: Material(
                       elevation: 2.0,
                       child: Stack(
@@ -98,27 +120,96 @@ class TukarPoint extends StatelessWidget {
             .toList(),
       );
 
-  Widget bodyData() {
+  Widget bodyData(context) {
     TukarPointBloc tukarPointBloc = TukarPointBloc();
     return StreamBuilder<List<TukarPointModel>>(
         stream: tukarPointBloc.tukarPointItems,
         builder: (context, snapshot) {
           return snapshot.hasData
-              ? tukarPointGrid(snapshot.data)
+              ? tukarPointGrid(snapshot.data,context)
               : Center(child: CircularProgressIndicator());
         });
   }
 
-  void showSnackBar() {
-    scaffoldKey.currentState.showSnackBar(SnackBar(
-      content: Text(
-        "Added to cart.",
-      ),
-      action: SnackBarAction(
-        label: "Undo",
-        onPressed: () {},
-      ),
-    ));
+  void showFlushBar(arrayTukarPoint,context) {
+          Flushbar(
+            flushbarPosition: FlushbarPosition.BOTTOM, //Immutable
+            reverseAnimationCurve: Curves.decelerate, //Immutable
+            forwardAnimationCurve: Curves.elasticOut, //Immutable
+            
+          )
+            ..title = arrayTukarPoint.name
+            ..message = arrayTukarPoint.description
+            ..duration = Duration(seconds: 3)
+            ..backgroundColor = Colors.red
+            ..backgroundColor = Colors.red
+            ..shadowColor = Colors.blue[800]
+            ..isDismissible = true
+            ..mainButton = FlatButton(
+              onPressed: () {
+                configClass.showLoading(context);
+                (() async {
+                  await getDataAccount();
+                  var dataPost = {
+                  "email":email, 
+                  "idTradePoint": arrayTukarPoint.id_trade_point,
+                  }; 
+                    http.post(configClass.tradePoint(), body: dataPost).then((response) {
+                     configClass.closeLoading(context);
+
+                      List dataResult;
+                      List dataContent;
+                      var extractdata = JSON.decode(response.body);
+                      dataResult = extractdata["result"];
+                      dataContent = dataResult[0]["content"];
+                      if(dataResult[0]["err"] == ''){
+                        var db = new DatabaseHelper();
+                        var dataAccount = new Account(
+                          email,
+                          password,
+                          nama,
+                          nomorTelepon,
+                          saldoMember -  int.tryParse(arrayTukarPoint.price),
+                          1,
+                        );
+                        db.updateAccount(dataAccount);
+                        AlertDialog dialog = new AlertDialog(
+                          content: new Text("Tukar Point Berhasil, tunggu konfirmasi dari kami")
+                        );
+                        showDialog(context: context,child: dialog);
+                      }else{
+                        AlertDialog dialog = new AlertDialog(
+                          content: new Text( dataResult[0]["err"] )
+                        );
+                        showDialog(context: context,child: dialog);
+                        print("babi kau ");
+
+                      }
+                        
+                      
+                    });
+                   
+               
+
+
+                })();
+                
+
+              },
+              child: Text(
+                "TUKAR",
+                style: TextStyle(color: Colors.amber),
+              ),
+            )
+            ..backgroundGradient = new LinearGradient(colors: [Colors.blue,Colors.black])
+            ..icon = Icon(
+              Icons.shopping_cart,
+              color: Colors.greenAccent,
+            )
+            ..linearProgressIndicator = LinearProgressIndicator(
+              backgroundColor: Colors.blueGrey,
+            )
+            ..show(context);
   }
 
   @override
@@ -129,7 +220,7 @@ class TukarPoint extends StatelessWidget {
       showDrawer: false,
       showFAB: false,
       actionFirstIcon: Icons.shopping_cart,
-      bodyData: bodyData(),
+      bodyData: bodyData(context),
     );
   }
 }

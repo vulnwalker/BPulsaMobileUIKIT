@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class TukarPointModel {
+  String id_trade_point;
   String name;
   String image;
   String rating;
@@ -10,7 +11,9 @@ class TukarPointModel {
   int quantity = 0;
 
   TukarPointModel(
-      {this.name,
+      {
+      this.id_trade_point,
+      this.name,
       this.image,
       this.brand,
       this.price,

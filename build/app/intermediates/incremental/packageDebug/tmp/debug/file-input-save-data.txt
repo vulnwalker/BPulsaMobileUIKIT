@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Sun Aug 12 22:47:12 WIB 2018
+#Tue Aug 14 20:47:59 WIB 2018
 17.baseType=DIRECTORY
 4.path=flutter_assets/fonts/MaterialIcons-Regular.ttf
 25.base=/home/kszxpo/AndroidStudioProjects/BPulsa/build/app/intermediates/assets/debug

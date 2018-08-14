@@ -68,10 +68,9 @@ class DatabaseHelper {
     return res;
   }
 
-  Future<bool> update(Account account) async {
+  Future<bool> updateAccount(Account account) async {
     var dbClient = await db;
-    int res =   await dbClient.update("tabel_account", account.toMap(),
-        where: "id = ?", whereArgs: <int>[account.id]);
+    int res =   await dbClient.update("tabel_account", account.toMap());
     return res > 0 ? true : false;
   }
 }
