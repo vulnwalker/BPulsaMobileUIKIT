@@ -26,7 +26,7 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 def keystorePropertiesFile = rootProject.file("key.properties")
 def keystoreProperties = new Properties()
-// keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
     compileSdkVersion 27
@@ -46,17 +46,20 @@ android {
 
     }
     signingConfigs {
-        // release {
-        // keyAlias keystoreProperties['keyAlias']
-        // keyPassword keystoreProperties['keyPassword']
-        // storeFile file(keystoreProperties['storeFile'])
-        // storePassword keystoreProperties['storePassword']
-        // }
+        release {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
         }
+    }
     buildTypes {
-    // release {
-    // signingConfig signingConfigs.release
-    // }
+        release {
+            signingConfig signingConfigs.debug
+            minifyEnabled true
+            useProguard true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
     }
 
 }

@@ -70,6 +70,7 @@ class TaskState extends State<Task> {
           print(event);
         });
   }
+  
   void loadVideoAds(adsUnit) {
     RewardedVideoAd.instance.load(
       adUnitId: RewardedVideoAd.testAdUnitId,
@@ -79,13 +80,13 @@ class TaskState extends State<Task> {
   void loadVideoAds2(adsUnit) {
     RewardedVideoAd.instance.load(
       adUnitId: RewardedVideoAd.testAdUnitId,
-      targetingInfo: targetingInfo,
+      // targetingInfo: targetingInfo,
     );
   }
   void loadVideoAds3(adsUnit) {
     RewardedVideoAd.instance.load(
       adUnitId: RewardedVideoAd.testAdUnitId,
-      targetingInfo: targetingInfo,
+      // targetingInfo: targetingInfo,
     );
   }
 
@@ -101,8 +102,7 @@ class TaskState extends State<Task> {
     FirebaseAdMob.instance.initialize(appId: FirebaseAdMob.testAppId);
     bannerAd = buildBanner()..load();
     interstitialAd = buildInterstitial()..load();
-    
-    RewardedVideoAd.instance.listener =
+     RewardedVideoAd.instance.listener =
         (RewardedVideoAdEvent event, {String rewardType, int rewardAmount}) {
       print("RewardedVideoAd event $event");
       if (event == RewardedVideoAdEvent.failedToLoad) {
@@ -111,7 +111,6 @@ class TaskState extends State<Task> {
             content: new Text("Gagal Load Video")
         );
         showDialog(context: context,child: dialog);
-        // loadVideoAds();
       } 
       if(event == RewardedVideoAdEvent.loaded){
         widget.configClass.closeLoading(context);
@@ -147,6 +146,7 @@ class TaskState extends State<Task> {
       //Test test test
 
     };
+   
    
 
   }
@@ -286,37 +286,33 @@ class TaskState extends State<Task> {
 
                 });
      }
-     void sendLogRequest(adsName,typeAds){
+     void sendLogRequest(adsName){
        var dataPost = {
                    "email":emailMember, 
                    "adsName":adsName, 
-                   "typeAds":typeAds, 
              };
         widget.configClass.showLoading(context);
+
         http.post(widget.configClass.requestAds(), body: dataPost).then((response) {
-          var extractdata = JSON.decode(response.body);
-          List dataResult;
-          List dataContent;
-          String err,cek;
-          dataResult = extractdata["result"];
-          err = dataResult[0]["err"];
-          cek = dataResult[0]["cek"];
-          dataContent = dataResult[0]["content"];
-          print(err);
+
+        var extractdata = JSON.decode(response.body);
+        List dataResult;
+        List dataContent;
+        String err,cek;
+        dataResult = extractdata["result"];
+        err = dataResult[0]["err"];
+        cek = dataResult[0]["cek"];
+        dataContent = dataResult[0]["content"];
+        print("ADS NAME  "+response.body);
           if(err == ""){
             publicAdsName = adsName;
             if(adsName == "VIDEO I"){
-              loadVideoAds(dataContent[0]["ads_unit"]);
+             loadVideoAds(dataContent[0]["ads_unit"]);
             }else if(adsName == "VIDEO II"){
               loadVideoAds2(dataContent[0]["ads_unit"]);
             }else if(adsName == "VIDEO III"){
               loadVideoAds3(dataContent[0]["ads_unit"]);
             }
-            // (() async {
-            //   var dbClient = await databaseHelper.db;
-            //   saldoMember = saldoMember + int.tryParse(dataContent[0]["point"]);
-            //   await dbClient.rawQuery("update tabel_account set saldo = '"+saldoMember.toString()+"'");
-            // })();
           }else{
             widget.configClass.closeLoading(context);
             Flushbar(
@@ -325,7 +321,7 @@ class TaskState extends State<Task> {
               forwardAnimationCurve: Curves.elasticOut, //Immutable
               
             )
-              ..title = "Error"
+              ..title = "Warning"
               ..message = err
               ..duration = Duration(seconds: 3)
               ..backgroundColor = Colors.red
@@ -367,7 +363,7 @@ class TaskState extends State<Task> {
                           label: "Video",
                           circleColor: Colors.orange,
                           onPressed: () {
-                            sendLogRequest("VIDEO I","REQUEST");
+                            sendLogRequest("VIDEO I");
                             
                           },
                         ),
@@ -376,15 +372,15 @@ class TaskState extends State<Task> {
                           label: "Video II",
                           circleColor: Colors.blue,
                           onPressed: () {
-                            sendLogRequest("VIDEO II","REQUEST");
+                            sendLogRequest("VIDEO II");
                           },
                         ),
                         LabelBelowIcon(
                           icon:  FontAwesomeIcons.film,
-                          label: "Video II ",
+                          label: "Video III",
                           circleColor: Colors.red,
                           onPressed: () {
-                            sendLogRequest("VIDEO III","REQUEST");
+                            sendLogRequest("VIDEO III");
                           },
                         ),
                         
