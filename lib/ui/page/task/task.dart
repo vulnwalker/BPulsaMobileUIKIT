@@ -404,7 +404,10 @@ class TaskState extends State<Task> {
                         LabelBelowIcon(
                           icon:  FontAwesomeIcons.gamepad,
                           label: "Games",
-                          circleColor: Colors.green
+                          circleColor: Colors.green,
+                          onPressed: () {
+                            Navigator.of(context).pushNamed(UIData.gameRoute);
+                          },
                         ),
                       ],
                     )

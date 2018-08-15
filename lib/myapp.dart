@@ -16,6 +16,7 @@ import 'package:bpulsa/CheckRoute.dart';
 import 'package:bpulsa/ui/page/tukarpoint/TukarPoint.dart';
 import 'package:bpulsa/ui/page/login/register.dart';
 import 'package:bpulsa/ui/page/task/task.dart';
+import 'package:bpulsa/ui/page/task/game.dart';
 
 import 'package:bpulsa/utils/uidata.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
 
       //routes
       routes: <String, WidgetBuilder>{
+        UIData.gameRoute: (BuildContext context) => Game(),
         UIData.logoutRoute: (BuildContext context) => LoginPage(),
         UIData.profileRoute: (BuildContext context) => Profile(),
         UIData.editProfileRoute: (BuildContext context) => EditProfile(),

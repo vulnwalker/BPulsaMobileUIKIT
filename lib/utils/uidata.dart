@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 class UIData {
   //routes
+  static const String gameRoute = "/game";
   static const String checkRoute = "/check";
   static const String logoutRoute = "/logout";
   static const String taskRoute = "/task";
