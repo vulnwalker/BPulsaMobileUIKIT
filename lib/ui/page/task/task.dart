@@ -12,6 +12,7 @@ import 'package:bpulsa/ui/widgets/label_below_icon.dart';
 
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'dart:async';
 //Database
 import 'package:bpulsa/database/DatabaseHelper.dart';
 import 'package:flushbar/flushbar.dart';
@@ -37,7 +38,9 @@ class TaskState extends State<Task> {
   String publicAdsName;
   BannerAd bannerAd;
   InterstitialAd interstitialAd;
-
+  bool backButton = true;
+  bool showLoading = false;
+ 
   var databaseHelper = new  DatabaseHelper() ;
   void getDataAccount() async{
     var dbClient = await databaseHelper.db;
@@ -46,6 +49,7 @@ class TaskState extends State<Task> {
     emailMember = list[0]["email"];
     saldoMember = list[0]["saldo"];
   }
+
   BannerAd buildBanner() {
     return BannerAd(
         adUnitId: BannerAd.testAdUnitId,
@@ -80,13 +84,13 @@ class TaskState extends State<Task> {
   void loadVideoAds2(adsUnit) {
     RewardedVideoAd.instance.load(
       adUnitId: RewardedVideoAd.testAdUnitId,
-      // targetingInfo: targetingInfo,
+      targetingInfo: targetingInfo,
     );
   }
   void loadVideoAds3(adsUnit) {
     RewardedVideoAd.instance.load(
       adUnitId: RewardedVideoAd.testAdUnitId,
-      // targetingInfo: targetingInfo,
+      targetingInfo: targetingInfo,
     );
   }
 
@@ -106,21 +110,30 @@ class TaskState extends State<Task> {
         (RewardedVideoAdEvent event, {String rewardType, int rewardAmount}) {
       print("RewardedVideoAd event $event");
       if (event == RewardedVideoAdEvent.failedToLoad) {
-        widget.configClass.closeLoading(context);
+        setState(() {
+                      showLoading =false;
+                      backButton =true;
+        });
         AlertDialog dialog = new AlertDialog(
             content: new Text("Gagal Load Video")
         );
         showDialog(context: context,child: dialog);
       } 
       if(event == RewardedVideoAdEvent.loaded){
-        widget.configClass.closeLoading(context);
+        setState(() {
+                      showLoading =false;
+                      backButton =true;
+        });
         RewardedVideoAd.instance.show();
         print("Iklan terload");
       }
 
       //onRewardedVideo
       if(event == RewardedVideoAdEvent.closed){
-        widget.configClass.closeLoading(context);
+        setState(() {
+                      showLoading =false;
+                      backButton =true;
+        });
         var dataPost = {
                    "email":emailMember, 
                    "adsName":publicAdsName, 
@@ -208,12 +221,18 @@ class TaskState extends State<Task> {
       );
 
      void doAbsenHarian(){
-       widget.configClass.showLoading(context);
+              setState(() {
+                      showLoading =true;
+                      backButton =false;
+              });
               var dataPost = {
                 "email":emailMember, 
                 };
               http.post(widget.configClass.absesnHarian(), body: dataPost).then((response) {
-                widget.configClass.closeLoading(context);
+                setState(() {
+                      showLoading =false;
+                      backButton =true;
+                 });
                 var extractdata = JSON.decode(response.body);
                 List dataResult;
                 List dataContent;
@@ -291,7 +310,10 @@ class TaskState extends State<Task> {
                    "email":emailMember, 
                    "adsName":adsName, 
              };
-        widget.configClass.showLoading(context);
+        setState(() {
+                      showLoading =true;
+                      backButton =false;
+              });
 
         http.post(widget.configClass.requestAds(), body: dataPost).then((response) {
 
@@ -314,7 +336,10 @@ class TaskState extends State<Task> {
               loadVideoAds3(dataContent[0]["ads_unit"]);
             }
           }else{
-            widget.configClass.closeLoading(context);
+            setState(() {
+                      showLoading =false;
+                      backButton =true;
+            });
             Flushbar(
               flushbarPosition: FlushbarPosition.TOP, //Immutable
               reverseAnimationCurve: Curves.decelerate, //Immutable
@@ -422,6 +447,12 @@ class TaskState extends State<Task> {
                           icon:  FontAwesomeIcons.random,
                           label: "Lucky Wheels",
                           circleColor: Colors.blue,
+                          onPressed: (){
+                            setState(() {
+                             showLoading =true;
+                             backButton =false;
+                            });
+                          },
                         ),
           
                       ],
@@ -500,7 +531,34 @@ class TaskState extends State<Task> {
           ),
         ),
       );
-    Widget allCards(BuildContext context) => SingleChildScrollView(
+    // Widget allCards(BuildContext context) => SingleChildScrollView(
+      
+    //   child: Column(
+    //     children: <Widget>[
+    //       appBarColumn(context),
+    //       SizedBox(
+    //         height: deviceSize.height * 0.01,
+    //       ),
+    //       SizedBox(
+    //         height: deviceSize.height * 0.01,
+    //       ),
+    //       actionMenuCard(),
+    //       SizedBox(
+    //         height: deviceSize.height * 0.01,
+    //       ),
+    //       balanceCard(),
+    //     ],
+    //   ),
+    // );
+    List<Widget> allCards(BuildContext context) {
+      // <Widget>[
+      //             
+      //             allCards,
+      //           ],
+    var appBar = LoginBackground(
+                    showIcon: false,
+                  );
+    SingleChildScrollView form = new SingleChildScrollView(
       child: Column(
         children: <Widget>[
           appBarColumn(context),
@@ -518,17 +576,63 @@ class TaskState extends State<Task> {
         ],
       ),
     );
+
+    var l = new List<Widget>();
+    l.add(appBar);
+    l.add(form);
+
+    if (showLoading) {
+      var modal = new Stack(
+        children: [
+          new Opacity(
+            opacity: 0.3,
+            child: const ModalBarrier(dismissible: false, color: Colors.grey),
+          ),
+          new Center(
+            child: new CircularProgressIndicator(),
+          ),
+        ],
+      );
+      l.add(modal);
+    }
+
+    return l;
+  }
+    Future<bool> _onWillPop() {
+
+      if(backButton == true){
+       Navigator.of(context).pop(true);
+      }
+    // return showDialog(
+    //   context: context,
+    //   builder: (context) => new AlertDialog(
+    //     title: new Text('Are you sure?'),
+    //     content: new Text('Do you want to exit an App'),
+    //     actions: <Widget>[
+    //       new FlatButton(
+    //         onPressed: () => Navigator.of(context).pop(false),
+    //         child: new Text('No'),
+    //       ),
+    //       new FlatButton(
+    //         onPressed: () => Navigator.of(context).pop(true),
+    //         child: new Text('Yes'),
+    //       ),
+    //     ],
+    //   ),
+    // ) ?? false;
+
+  }
+
+
     bannerAd.show();
-    return Scaffold(
+    return new WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
         body:  Stack(
                 fit: StackFit.expand,
-                children: <Widget>[
-                  LoginBackground(
-                    showIcon: false,
-                  ),
-                  allCards(context),
-                ],
+                children: allCards(context)
               )
+      ),
     );
   }
 }

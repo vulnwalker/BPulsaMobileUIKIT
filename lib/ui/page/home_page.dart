@@ -7,8 +7,17 @@ import 'package:bpulsa/ui/widgets/profile_tile.dart';
 import 'package:bpulsa/utils/uidata.dart';
 import 'package:flutter/foundation.dart';
 import 'package:bpulsa/database/DatabaseHelper.dart';
+import 'dart:async';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+
+  @override
+  HomePageState createState() {
+    return new HomePageState();
+  }
+}
+
+class HomePageState extends State<HomePage> {
   final _scaffoldState = GlobalKey<ScaffoldState>();
   Size deviceSize;
   //menuStack
@@ -111,7 +120,10 @@ class HomePage extends StatelessWidget {
         data: Theme.of(context).copyWith(
               canvasColor: Colors.transparent,
             ),
-        child: Scaffold(key: _scaffoldState, body: bodySliverList()),
+        child: new WillPopScope(
+          onWillPop: _onWillPop,
+          child: Scaffold(key: _scaffoldState, body: bodySliverList()),
+        ),
       );
 
   Widget bodySliverList() {
@@ -335,7 +347,25 @@ class HomePage extends StatelessWidget {
           ),
         ),
       );
-
+  Future<bool> _onWillPop() {
+      return showDialog(
+        context: context,
+        builder: (context) => new AlertDialog(
+          title: new Text('Are you sure?'),
+          content: new Text('Do you want to exit an App'),
+          actions: <Widget>[
+            new FlatButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: new Text('No'),
+            ),
+            new FlatButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: new Text('Yes'),
+            ),
+          ],
+        ),
+      ) ?? false;
+  }
   @override
   Widget build(BuildContext context) {
     deviceSize = MediaQuery.of(context).size;
