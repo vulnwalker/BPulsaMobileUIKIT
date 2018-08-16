@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/home/kszxpo/AndroidStudioProjects/BPulsa/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml",
+            "outputFile": "/home/kszxpo/AndroidStudioProject/BPulsaMobileUIKIT/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml",
             "map": [
                 {
                     "source": "/root/.gradle/caches/transforms-1/files-1.1/play-services-basement-15.0.1.aar/838d0f0fabdbedd51d2d59c01fb8715c/res/values/values.xml",
@@ -38,25 +38,6 @@
                     }
                 },
                 {
-                    "source": "/home/kszxpo/AndroidStudioProjects/BPulsa/android/app/src/main/res/values/styles.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endLines": "6",
-                        "endColumns": "12",
-                        "endOffsets": "347"
-                    },
-                    "to": {
-                        "startLines": "111",
-                        "startColumns": "4",
-                        "startOffsets": "7660",
-                        "endLines": "115",
-                        "endColumns": "12",
-                        "endOffsets": "7952"
-                    }
-                },
-                {
                     "source": "/root/.gradle/caches/transforms-1/files-1.1/play-services-ads-lite-15.0.1.aar/fbd30894ec6dd002e65d3d1f0e5fc735/res/values/values.xml",
                     "from": {
                         "startLines": "4",
@@ -76,7 +57,26 @@
                     }
                 },
                 {
-                    "source": "/home/kszxpo/AndroidStudioProjects/BPulsa/android/app/src/main/res/values/ic_launcher_background.xml",
+                    "source": "/home/kszxpo/AndroidStudioProject/BPulsaMobileUIKIT/android/app/src/main/res/values/styles.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "6",
+                        "endColumns": "12",
+                        "endOffsets": "347"
+                    },
+                    "to": {
+                        "startLines": "111",
+                        "startColumns": "4",
+                        "startOffsets": "7660",
+                        "endLines": "115",
+                        "endColumns": "12",
+                        "endOffsets": "7952"
+                    }
+                },
+                {
+                    "source": "/home/kszxpo/AndroidStudioProject/BPulsaMobileUIKIT/android/app/src/main/res/values/ic_launcher_background.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

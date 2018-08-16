@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/home/kszxpo/AndroidStudioProjects/BPulsa/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-pa/values-pa.xml",
+            "outputFile": "/home/kszxpo/AndroidStudioProject/BPulsaMobileUIKIT/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-pa/values-pa.xml",
             "map": [
                 {
                     "source": "/root/.gradle/caches/transforms-1/files-1.1/play-services-basement-15.0.1.aar/838d0f0fabdbedd51d2d59c01fb8715c/res/values-pa/values.xml",

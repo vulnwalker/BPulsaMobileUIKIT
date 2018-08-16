@@ -113,7 +113,7 @@ class TaskState extends State<Task> {
         setState(() {
                       showLoading =false;
                       backButton =true;
-        });
+          });
         AlertDialog dialog = new AlertDialog(
             content: new Text("Gagal Load Video")
         );

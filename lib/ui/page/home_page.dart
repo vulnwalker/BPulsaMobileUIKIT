@@ -9,6 +9,8 @@ import 'package:flutter/foundation.dart';
 import 'package:bpulsa/database/DatabaseHelper.dart';
 import 'dart:async';
 
+import 'package:flutter/services.dart';
+
 class HomePage extends StatefulWidget {
 
   @override
@@ -77,6 +79,7 @@ class HomePageState extends State<HomePage> {
   //appbar
   Widget appBar() => SliverAppBar(
         backgroundColor: Colors.black,
+        automaticallyImplyLeading: false,
         pinned: true,
         elevation: 10.0,
         forceElevated: true,
@@ -359,7 +362,7 @@ class HomePageState extends State<HomePage> {
               child: new Text('No'),
             ),
             new FlatButton(
-              onPressed: () => Navigator.of(context).pop(true),
+              onPressed: () => SystemNavigator.pop(),
               child: new Text('Yes'),
             ),
           ],
