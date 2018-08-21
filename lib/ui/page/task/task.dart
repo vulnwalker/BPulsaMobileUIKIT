@@ -601,6 +601,8 @@ class TaskState extends State<Task> {
     Future<bool> _onWillPop() {
 
       if(backButton == true){
+        bannerAd?.dispose();
+        interstitialAd?.dispose();
        Navigator.of(context).pop(true);
       }
     // return showDialog(

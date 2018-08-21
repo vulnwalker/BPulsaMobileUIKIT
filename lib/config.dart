@@ -26,6 +26,9 @@ class ConfigClass {
   String daftarTukarPoint(){
     return getHostName()+"daftar/point";
   }
+  String daftarPayment(){
+    return getHostName()+"daftar/payment";
+  }
   String absesnHarian(){
     return getHostName()+"task/absen";
   }

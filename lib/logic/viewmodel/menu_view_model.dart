@@ -28,7 +28,7 @@ class MenuViewModel {
         menuColor: Color(0xffddcec2),
         icon: Icons.payment,
         image: UIData.paymentImage,
-        targetPage: "Credit Card"
+        targetPage: "payment"
       ),
       Menu(
         title: "News",

@@ -7,6 +7,7 @@ class UIData {
   //routes
   static const String gameRoute = "/game";
   static const String checkRoute = "/check";
+  static const String paymentRoute = "/payment";
   static const String logoutRoute = "/logout";
   static const String taskRoute = "/task";
   static const String homeRoute = "/home";

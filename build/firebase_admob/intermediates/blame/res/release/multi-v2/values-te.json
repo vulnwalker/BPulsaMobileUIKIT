@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/home/kszxpo/AndroidStudioProjects/BPulsa/build/firebase_admob/intermediates/incremental/mergeReleaseResources/merged.dir/values-te/values-te.xml",
+            "outputFile": "/home/kszxpo/AndroidStudioProjects/BPulsaMobileUIKIT/build/firebase_admob/intermediates/res/merged/release/values-te/values-te.xml",
             "map": [
                 {
                     "source": "/root/.gradle/caches/transforms-1/files-1.1/play-services-basement-15.0.1.aar/838d0f0fabdbedd51d2d59c01fb8715c/res/values-te/values.xml",
@@ -74,7 +74,7 @@
             ]
         },
         {
-            "outputFile": "/home/kszxpo/AndroidStudioProjects/BPulsa/build/firebase_admob/intermediates/res/merged/release/values-te/values-te.xml",
+            "outputFile": "/home/kszxpo/AndroidStudioProjects/BPulsaMobileUIKIT/build/firebase_admob/intermediates/incremental/mergeReleaseResources/merged.dir/values-te/values-te.xml",
             "map": [
                 {
                     "source": "/root/.gradle/caches/transforms-1/files-1.1/play-services-basement-15.0.1.aar/838d0f0fabdbedd51d2d59c01fb8715c/res/values-te/values.xml",
