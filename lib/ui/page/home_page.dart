@@ -8,7 +8,7 @@ import 'package:bpulsa/utils/uidata.dart';
 import 'package:flutter/foundation.dart';
 import 'package:bpulsa/database/DatabaseHelper.dart';
 import 'dart:async';
-
+import 'package:share/share.dart';
 import 'package:flutter/services.dart';
 
 class HomePage extends StatefulWidget {
@@ -175,6 +175,8 @@ class HomePageState extends State<HomePage> {
        var databaseHelper = new  DatabaseHelper() ;
        databaseHelper.deleteAccount();
        Navigator.pushReplacementNamed(context, "/${menu.targetPage}");
+    }else if(menu.targetPage == "Share"){
+      Share.share("Ayo bergabung dengan kami di BPulsa, banyak hadiah menarik setiap hari nya. Gunakan Referal saya http://bpulsa.rm-rf.studio/ref/vulnwalker. Check On Play Store");
     }else{
       Navigator.pushNamed(context, "/${menu.targetPage}");
     }

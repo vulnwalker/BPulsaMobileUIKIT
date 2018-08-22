@@ -228,16 +228,16 @@ class GameState extends State<Game> {
         bodyData: Center(
           child: buildBoard(),
         ),
-        showFAB: true,
+        showFAB: false,
         // showDrawer: true,
-        floatingIcon: Icons.edit,
-        eventFloatButton: (){
-          // AlertDialog dialog = new AlertDialog(
-          //               content: new Text("Reload Activity")
-          //             );
-          // showDialog(context: context,child: dialog);
-          Navigator.of(context).pushNamed(UIData.editProfileRoute);
-        },
+        // floatingIcon: Icons.edit,
+        // eventFloatButton: (){
+        //   // AlertDialog dialog = new AlertDialog(
+        //   //               content: new Text("Reload Activity")
+        //   //             );
+        //   // showDialog(context: context,child: dialog);
+        //   Navigator.of(context).pushNamed(UIData.editProfileRoute);
+        // },
       );
   @override
   Widget build(BuildContext context) {

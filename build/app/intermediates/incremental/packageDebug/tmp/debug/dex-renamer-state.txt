@@ -1,4 +1,4 @@
-#Wed Aug 22 01:45:36 WIB 2018
+#Wed Aug 22 16:36:00 WIB 2018
 base.0=/home/kszxpo/AndroidStudioProjects/BPulsaMobileUIKIT/build/app/intermediates/transforms/dexMerger/debug/0
 path.0=classes.dex
 renamed.0=classes.dex

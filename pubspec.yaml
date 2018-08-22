@@ -26,6 +26,7 @@ dependencies:
   path_provider: ^0.3.1
   firebase_admob: ^0.5.2
   flushbar: 0.7.5
+  share: 0.5.3
 
 dev_dependencies:
   random_pk:

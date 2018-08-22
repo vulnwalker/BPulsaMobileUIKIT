@@ -12,7 +12,6 @@ import 'package:bpulsa/database/DatabaseHelper.dart';
 import 'dart:convert';
 import 'package:bpulsa/database/model/account.dart';
 class Payment extends StatefulWidget {
-
   
 
   @override
@@ -51,30 +50,9 @@ class PaymentState extends State<Payment> {
   @override
   void initState() {
     super.initState();
-    (() async {
-      await getDataAccount();
-
-    });
-
     _getMoreData();
-    
     _scrollController.addListener(() {
       if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
-        double edge = 50.0;
-              double offsetFromBottom = _scrollController.position.maxScrollExtent -
-                      _scrollController.position.pixels;
-        // if (offsetFromBottom < edge) {
-                   
-          _scrollController.animateTo(
-              _scrollController.offset - (edge - offsetFromBottom),
-              duration: new Duration(milliseconds: 500),
-              curve: Curves.easeOut
-            );
-        // }
-        //  AlertDialog dialog = new AlertDialog(
-        //                   content: new Text("Tukar Point Berhasil, tunggu konfirmasi dari kami")
-        //                 );
-        //             showDialog(context: context,child: dialog);
         _getMoreData();
       }
     });
@@ -88,7 +66,46 @@ class PaymentState extends State<Payment> {
 
   _getMoreData() async {
         await getDataAccount();
-         http.post(configClass.daftarPayment(), body: {"email":email,"from" : limitFrom.toString(),"to":limitTo.toString()}).then((response) async{
+         if (!isPerformingRequest) {
+            setState(() => isPerformingRequest = true);
+            List<int> newEntries = await fakeRequest(
+                items.length, items.length + 10); //returns empty list
+                if (newEntries.isEmpty) {
+                  double edge = 200.0;
+                  double offsetFromBottom = _scrollController.position.maxScrollExtent -
+                      _scrollController.position.pixels;
+                  if (offsetFromBottom < edge) {
+                      _scrollController.animateTo(
+                        _scrollController.offset - (edge - offsetFromBottom),
+                        duration: new Duration(milliseconds: 500),
+                        curve: Curves.easeOut
+                      );
+                  }
+                }
+            setState(() {
+              items.addAll(newEntries);
+              isPerformingRequest = false;
+            });
+          }
+         
+   
+  }
+
+  Widget _buildProgressIndicator() {
+    return new Padding(
+      padding: const EdgeInsets.all(1.0),
+      child: new Center(
+        child: new Opacity(
+          opacity: isPerformingRequest ? 1.0 : 0.0,
+          child: new CircularProgressIndicator(),
+        ),
+      ),
+    );
+  }
+
+  /// from - inclusive, to - exclusive
+  Future<List<int>> fakeRequest(int from, int to) async {
+    await http.post(configClass.daftarPayment(), body: {"email":email,"from" : limitFrom.toString(),"to":limitTo.toString()}).then((response) {
             List dataResult;
             List dataContent;
             var extractdata = JSON.decode(response.body);
@@ -108,48 +125,9 @@ class PaymentState extends State<Payment> {
                   );     
               }
               limitFrom = limitFrom + dataContent.length ;
-              if (!isPerformingRequest) {
-                setState(() => isPerformingRequest = true);
-                List<int> newEntries = await fakeRequest(
-                    items.length, items.length + 10); //returns empty list
-                // if (newEntries.isEmpty) {
-                //   double edge = 50.0;
-                //   double offsetFromBottom = _scrollController.position.maxScrollExtent -
-                //       _scrollController.position.pixels;
-                //   if (offsetFromBottom < edge) {
-                   
-                //    await _scrollController.animateTo(
-                //         _scrollController.offset - (edge - offsetFromBottom),
-                //         duration: new Duration(milliseconds: 500),
-                //         curve: Curves.easeOut
-                //       );
-                //   }
-                // }
-                setState(() {
-                  items.addAll(newEntries);
-                  isPerformingRequest = false;
-                });
-              }
             }
-          
-        });
-   
-  }
-
-  Widget _buildProgressIndicator() {
-    return new Padding(
-      padding: const EdgeInsets.all(1.0),
-      child: new Center(
-        child: new Opacity(
-          opacity: isPerformingRequest ? 1.0 : 0.0,
-          child: new CircularProgressIndicator(),
-        ),
-      ),
-    );
-  }
-
-  /// from - inclusive, to - exclusive
-  Future<List<int>> fakeRequest(int from, int to) async {
+        
+      });
       return List.generate(to - from, (i) => i + from);
   }
   Widget bodyData(context) {

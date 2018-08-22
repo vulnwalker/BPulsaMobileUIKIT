@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:bpulsa/logic/bloc/post_bloc.dart';
 import 'package:bpulsa/model/post.dart';
 import 'package:bpulsa/ui/widgets/common_divider.dart';
-import 'package:bpulsa/ui/widgets/common_drawer.dart';
+// import 'package:bpulsa/ui/widgets/common_drawer.dart';
 import 'package:bpulsa/ui/widgets/label_icon.dart';
 import 'package:bpulsa/utils/uidata.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -71,10 +71,10 @@ class TimelineOnePage extends StatelessWidget {
       elevation: 2.0,
       child: Column(
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: profileColumn(context, post),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.all(8.0),
+          //   child: profileColumn(context, post),
+          // ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
@@ -94,7 +94,7 @@ class TimelineOnePage extends StatelessWidget {
                 )
               : Container(),
           post.messageImage != null ? Container() : CommonDivider(),
-          actionColumn(post),
+          // actionColumn(post),
         ],
       ),
     );
@@ -128,9 +128,9 @@ class TimelineOnePage extends StatelessWidget {
   Widget appBar() => SliverAppBar(
         backgroundColor: Colors.black,
         elevation: 2.0,
-        title: Text("Feed"),
+        title: Text("News"),
         forceElevated: true,
-        pinned: true,
+        pinned: false,
         floating: true,
         bottom: bottomBar(),
       );
@@ -163,7 +163,7 @@ class TimelineOnePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: CommonDrawer(),
+      // drawer: CommonDrawer(),
       body: bodySliverList(),
     );
   }

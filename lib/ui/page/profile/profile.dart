@@ -86,7 +86,8 @@ class ProfileState extends State<Profile> {
                     ),
                   ),
                   child: CircleAvatar(
-                    backgroundImage: AssetImage("assets/images/pk.jpg"),
+                    backgroundImage: AssetImage("assets/logo.png"),
+                    backgroundColor: Colors.black,
                     foregroundColor: Colors.black,
                     radius: 40.0,
                   ),
@@ -158,7 +159,7 @@ class ProfileState extends State<Profile> {
           CommonDivider(),
           descColumn(),
           CommonDivider(),
-          accountColumn()
+          // accountColumn()
         ],
       ),
     );

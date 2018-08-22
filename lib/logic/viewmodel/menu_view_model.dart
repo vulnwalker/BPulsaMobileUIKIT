@@ -45,18 +45,18 @@ class MenuViewModel {
         targetPage: "profile",
       ),
       Menu(
-        title: "Settings",
+        title: "Share",
         menuColor: Color(0xff2a8ccf),
-        icon: Icons.settings,
+        icon: Icons.share,
         image: UIData.settingsImage,
-        targetPage: "Device Settings"
+        targetPage: "Share"
       ),
       Menu(
         title: "About",
         menuColor: Color(0xffc7d8f4),
         icon: Icons.help,
         image: UIData.loginImage,
-        targetPage: "Shopping List"
+        targetPage: "about"
       ),
       
       Menu(
