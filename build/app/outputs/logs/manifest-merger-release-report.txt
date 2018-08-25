@@ -6,6 +6,7 @@ INJECTED from /home/kszxpo/AndroidStudioProjects/BPulsaMobileUIKIT/android/app/s
 INJECTED from /home/kszxpo/AndroidStudioProjects/BPulsaMobileUIKIT/android/app/src/main/AndroidManifest.xml:1:1-39:12
 MERGED from [:firebase_admob] /home/kszxpo/AndroidStudioProjects/BPulsaMobileUIKIT/build/firebase_admob/intermediates/manifests/full/release/AndroidManifest.xml:2:1-9:12
 MERGED from [:sqflite] /home/kszxpo/AndroidStudioProjects/BPulsaMobileUIKIT/build/sqflite/intermediates/manifests/full/release/AndroidManifest.xml:2:1-11:12
+MERGED from [:share] /home/kszxpo/AndroidStudioProjects/BPulsaMobileUIKIT/build/share/intermediates/manifests/full/release/AndroidManifest.xml:2:1-7:12
 MERGED from [:path_provider] /home/kszxpo/AndroidStudioProjects/BPulsaMobileUIKIT/build/path_provider/intermediates/manifests/full/release/AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.firebase:firebase-ads:15.0.1] /root/.gradle/caches/transforms-1/files-1.1/firebase-ads-15.0.1.aar/bf0d11786d44a6694ddaf176e686bf90/AndroidManifest.xml:2:1-9:12
 MERGED from [com.google.android.gms:play-services-ads:15.0.1] /root/.gradle/caches/transforms-1/files-1.1/play-services-ads-15.0.1.aar/43c2c67a4257ceffc7fba0eafe29dcfd/AndroidManifest.xml:17:1-25:12
@@ -154,6 +155,8 @@ MERGED from [:firebase_admob] /home/kszxpo/AndroidStudioProjects/BPulsaMobileUIK
 MERGED from [:firebase_admob] /home/kszxpo/AndroidStudioProjects/BPulsaMobileUIKIT/build/firebase_admob/intermediates/manifests/full/release/AndroidManifest.xml:5:5-44
 MERGED from [:sqflite] /home/kszxpo/AndroidStudioProjects/BPulsaMobileUIKIT/build/sqflite/intermediates/manifests/full/release/AndroidManifest.xml:7:5-9:41
 MERGED from [:sqflite] /home/kszxpo/AndroidStudioProjects/BPulsaMobileUIKIT/build/sqflite/intermediates/manifests/full/release/AndroidManifest.xml:7:5-9:41
+MERGED from [:share] /home/kszxpo/AndroidStudioProjects/BPulsaMobileUIKIT/build/share/intermediates/manifests/full/release/AndroidManifest.xml:5:5-44
+MERGED from [:share] /home/kszxpo/AndroidStudioProjects/BPulsaMobileUIKIT/build/share/intermediates/manifests/full/release/AndroidManifest.xml:5:5-44
 MERGED from [:path_provider] /home/kszxpo/AndroidStudioProjects/BPulsaMobileUIKIT/build/path_provider/intermediates/manifests/full/release/AndroidManifest.xml:5:5-44
 MERGED from [:path_provider] /home/kszxpo/AndroidStudioProjects/BPulsaMobileUIKIT/build/path_provider/intermediates/manifests/full/release/AndroidManifest.xml:5:5-44
 MERGED from [com.google.firebase:firebase-ads:15.0.1] /root/.gradle/caches/transforms-1/files-1.1/firebase-ads-15.0.1.aar/bf0d11786d44a6694ddaf176e686bf90/AndroidManifest.xml:5:5-44

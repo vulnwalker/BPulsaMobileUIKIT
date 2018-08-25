@@ -2784,6 +2784,23 @@ io.flutter.plugins.pathprovider.PathProviderPlugin: java.lang.String getPathProv
 io.flutter.plugins.pathprovider.PathProviderPlugin: java.lang.String getPathProviderStorageDirectory()
 io.flutter.plugins.pathprovider.R
 io.flutter.plugins.pathprovider.R: R()
+io.flutter.plugins.share.BuildConfig
+io.flutter.plugins.share.BuildConfig: boolean DEBUG
+io.flutter.plugins.share.BuildConfig: java.lang.String APPLICATION_ID
+io.flutter.plugins.share.BuildConfig: java.lang.String BUILD_TYPE
+io.flutter.plugins.share.BuildConfig: java.lang.String FLAVOR
+io.flutter.plugins.share.BuildConfig: int VERSION_CODE
+io.flutter.plugins.share.BuildConfig: java.lang.String VERSION_NAME
+io.flutter.plugins.share.BuildConfig: BuildConfig()
+io.flutter.plugins.share.R
+io.flutter.plugins.share.R: R()
+io.flutter.plugins.share.SharePlugin
+io.flutter.plugins.share.SharePlugin: java.lang.String CHANNEL
+io.flutter.plugins.share.SharePlugin: io.flutter.plugin.common.PluginRegistry$Registrar mRegistrar
+io.flutter.plugins.share.SharePlugin: void registerWith(io.flutter.plugin.common.PluginRegistry$Registrar)
+io.flutter.plugins.share.SharePlugin: SharePlugin(io.flutter.plugin.common.PluginRegistry$Registrar)
+io.flutter.plugins.share.SharePlugin: void onMethodCall(io.flutter.plugin.common.MethodCall,io.flutter.plugin.common.MethodChannel$Result)
+io.flutter.plugins.share.SharePlugin: void share(java.lang.String)
 io.flutter.util.PathUtils
 io.flutter.util.PathUtils: PathUtils()
 io.flutter.util.PathUtils: java.lang.String getDataDirectory(android.content.Context)
