@@ -32,12 +32,19 @@ class DatabaseHelper {
     // When creating the db, create the table
     await db.execute(
         "CREATE TABLE tabel_account (id INTEGER PRIMARY KEY, email text, password text,nama text,nomor_telepon text,saldo INTEGER,status INTEGER)");
-        print("database created");
+    // await db.execute(
+    //     "CREATE TABLE info_account (id INTEGER PRIMARY KEY, jumlah_trade_point INTEGER, jumlah_absen int,jam )");
+    //     print("database created");
   }
 
   Future<int> saveAccount(Account account) async {
     var dbClient = await db;
     int res = await dbClient.insert("tabel_account", account.toMap());
+    return res;
+  }
+  Future<int> sqlInsert(tableName,list) async {
+    var dbClient = await db;
+    int res = await dbClient.insert(tableName, list.toMap());
     return res;
   }
 

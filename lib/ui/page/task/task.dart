@@ -38,6 +38,8 @@ class TaskState extends State<Task> {
   String publicAdsName;
   BannerAd bannerAd;
   InterstitialAd interstitialAd;
+  InterstitialAd interstitialAdLuckyPoint;
+  InterstitialAd interstitialAdAbsen;
   bool backButton = true;
   bool showLoading = false;
  
@@ -74,6 +76,87 @@ class TaskState extends State<Task> {
           print(event);
         });
   }
+  InterstitialAd buildInterstitialLuckyPoint(adUnit) {
+    return InterstitialAd(
+        adUnitId: InterstitialAd.testAdUnitId,
+        targetingInfo: targetingInfo,
+        listener: (MobileAdEvent event) {
+          if (event == MobileAdEvent.failedToLoad) {
+            interstitialAdLuckyPoint..load();
+          } else if (event == MobileAdEvent.closed) {
+            // interstitialAd = buildInterstitial()..load();
+          }else if (event == MobileAdEvent.loaded) {
+            setState(() {
+                      showLoading =false;
+                      backButton =true;
+            });
+            var dataPost = {
+                      "email":emailMember, 
+                      "adsName":publicAdsName, 
+                };
+            http.post(widget.configClass.getReward(), body: dataPost).then((response) {
+              var extractdata = JSON.decode(response.body);
+              List dataResult;
+              List dataContent;
+              String err,cek;
+              dataResult = extractdata["result"];
+              err = dataResult[0]["err"];
+              cek = dataResult[0]["cek"];
+              dataContent = dataResult[0]["content"];
+              (() async {
+                var dbClient = await databaseHelper.db;
+                saldoMember = saldoMember + int.tryParse(dataContent[0]["point"]);
+                await dbClient.rawQuery("update tabel_account set saldo = '"+saldoMember.toString()+"'");
+              })();
+              setState(() {
+                Flushbar(
+                    flushbarPosition: FlushbarPosition.TOP, //Immutable
+                    reverseAnimationCurve: Curves.decelerate, //Immutable
+                    forwardAnimationCurve: Curves.elasticOut, //Immutable
+                    
+                  )
+                    ..title = "Lucky Point"
+                    ..message = "Anda mendapatkan "+dataContent[0]["point"]+" Point dari lucky point"
+                    ..duration = Duration(seconds: 10)
+                    ..backgroundColor = Colors.red
+                    ..backgroundColor = Colors.red
+                    ..shadowColor = Colors.blue[800]
+                    ..isDismissible = true
+                    ..backgroundGradient = new LinearGradient(colors: [Colors.blue,Colors.black])
+                    ..icon = Icon(
+                      Icons.error,
+                      color: Colors.greenAccent,
+                    )
+                    ..linearProgressIndicator = LinearProgressIndicator(
+                      backgroundColor: Colors.blueGrey,
+                    )
+                    ..show(context);
+              });
+            });
+            interstitialAdLuckyPoint.show();
+          }
+          print(event);
+        });
+  }
+  InterstitialAd buildInterstitialAbsen(adUnit) {
+    return InterstitialAd(
+        adUnitId: InterstitialAd.testAdUnitId,
+        targetingInfo: targetingInfo,
+        listener: (MobileAdEvent event) {
+          if (event == MobileAdEvent.failedToLoad) {
+            interstitialAdLuckyPoint..load();
+          } else if (event == MobileAdEvent.closed) {
+            // interstitialAd = buildInterstitial()..load();
+          }else if (event == MobileAdEvent.loaded) {
+            setState(() {
+                      showLoading =false;
+                      backButton =true;
+            });
+            interstitialAdAbsen.show();
+          }
+          print(event);
+        });
+  }
   
   void loadVideoAds(adsUnit) {
     RewardedVideoAd.instance.load(
@@ -92,6 +175,9 @@ class TaskState extends State<Task> {
       adUnitId: RewardedVideoAd.testAdUnitId,
       targetingInfo: targetingInfo,
     );
+  }
+  void luckyPointAds(adsUnit) {
+    interstitialAdLuckyPoint = buildInterstitialLuckyPoint(adsUnit)..load();
   }
 
   @override
@@ -228,7 +314,7 @@ class TaskState extends State<Task> {
               var dataPost = {
                 "email":emailMember, 
                 };
-              http.post(widget.configClass.absesnHarian(), body: dataPost).then((response) {
+              http.post(widget.configClass.absenHarian(), body: dataPost).then((response) {
                 setState(() {
                       showLoading =false;
                       backButton =true;
@@ -249,8 +335,6 @@ class TaskState extends State<Task> {
                     await dbClient.rawQuery("update tabel_account set saldo = '"+saldoMember.toString()+"'");
                     
                   })();
-                  
-                  
                   Flushbar(
                     flushbarPosition: FlushbarPosition.TOP, //Immutable
                     reverseAnimationCurve: Curves.decelerate, //Immutable
@@ -258,7 +342,7 @@ class TaskState extends State<Task> {
                     
                   )
                     ..title = "Sukses"
-                    ..message = "Absesn Harian Berhasil di lakukan, anda mendapatkan "+dataContent[0]["point"]+" Point"
+                    ..message = "Absen Harian Berhasil di lakukan, anda mendapatkan "+dataContent[0]["point"]+" Point"
                     ..duration = Duration(seconds: 3)
                     ..backgroundColor = Colors.red
                     ..backgroundColor = Colors.red
@@ -273,7 +357,7 @@ class TaskState extends State<Task> {
                       backgroundColor: Colors.blueGrey,
                     )
                     ..show(context);
-                     interstitialAd = buildInterstitial()..load();
+                     interstitialAdAbsen = buildInterstitialAbsen(dataContent[0]["ad_unit"])..load();
 
                     setState((){
                     });
@@ -306,6 +390,7 @@ class TaskState extends State<Task> {
                 });
      }
      void sendLogRequest(adsName){
+       
        var dataPost = {
                    "email":emailMember, 
                    "adsName":adsName, 
@@ -334,6 +419,8 @@ class TaskState extends State<Task> {
               loadVideoAds2(dataContent[0]["ads_unit"]);
             }else if(adsName == "VIDEO III"){
               loadVideoAds3(dataContent[0]["ads_unit"]);
+            }else if(adsName == "LUCKY POINT"){
+              luckyPointAds(dataContent[0]["ads_unit"]);
             }
           }else{
             setState(() {
@@ -427,6 +514,14 @@ class TaskState extends State<Task> {
                           },
                         ),
                         LabelBelowIcon(
+                          icon:  FontAwesomeIcons.random,
+                          label: "Lucky Point",
+                          circleColor: Colors.blue,
+                          onPressed: (){
+                            sendLogRequest("LUCKY POINT");
+                          },
+                        ),
+                        LabelBelowIcon(
                           icon:  FontAwesomeIcons.gamepad,
                           label: "Games",
                           circleColor: Colors.green,
@@ -444,17 +539,16 @@ class TaskState extends State<Task> {
                       mainAxisSize: MainAxisSize.max,
                       children: <Widget>[
                         LabelBelowIcon(
-                          icon:  FontAwesomeIcons.random,
-                          label: "Lucky Wheels",
+                          icon:  FontAwesomeIcons.mailchimp,
+                          label: "SMS Sender",
                           circleColor: Colors.blue,
                           onPressed: (){
-                            setState(() {
-                             showLoading =true;
-                             backButton =false;
-                            });
+                            // setState(() {
+                            //  showLoading =true;
+                            //  backButton =false;
+                            // });
                           },
                         ),
-          
                       ],
                     )
                   ),

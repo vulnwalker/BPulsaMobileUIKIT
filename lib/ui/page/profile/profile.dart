@@ -21,6 +21,8 @@ class ProfileState extends State<Profile> {
   Size deviceSize;
   String emailMember,namaMember,teleponMember;
   int saldoMember;
+  String jumlahPenukaran = "0";
+  String jumlahAbsen = "0";
   ConfigClass configClass = new ConfigClass();
   var databaseHelper = new  DatabaseHelper() ;
 
@@ -31,6 +33,28 @@ class ProfileState extends State<Profile> {
         emailMember = list[0]["email"];
         saldoMember = list[0]["saldo"];
         teleponMember = list[0]["nomor_telepon"];
+        getLogUser();
+  }
+
+  void getLogUser()  {
+     http.post(configClass.getLogUser(), body: {"email" : emailMember}).then((response) {
+          print(response.body);
+          var extractdata = JSON.decode(response.body);
+          List dataResult;
+          List dataContent;
+          String err,cek;
+          dataResult = extractdata["result"];
+          err = dataResult[0]["err"];
+          cek = dataResult[0]["cek"];
+          dataContent = dataResult[0]["content"];
+          setState(() {
+             jumlahPenukaran = dataContent[0]["penukaran"];
+             jumlahAbsen = dataContent[0]["absen"];
+           });
+      
+         
+        });
+
   }
   @override
   void initState() {
@@ -38,7 +62,6 @@ class ProfileState extends State<Profile> {
     (() async {
          await getDataAccount();
         setState(() {
-                  
         });
     })();
   
@@ -190,11 +213,11 @@ class ProfileState extends State<Profile> {
           ),
           ProfileTile(
             title: "Penukaran",
-            subtitle: "4",
+            subtitle: jumlahPenukaran,
           ),
           ProfileTile(
             title: "Absen",
-            subtitle: "10",
+            subtitle: jumlahAbsen,
           ),
        
         ],

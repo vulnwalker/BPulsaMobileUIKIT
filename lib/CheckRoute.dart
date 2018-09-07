@@ -25,6 +25,7 @@ class _CheckRouteState extends State<CheckRoute> {
   void initState(){
     super.initState();
     (() async {
+      
       this.widget.databaseHelper.initDb();
       var statusLogin =  await this.widget.databaseHelper.accountRowCount() ;
       print("Row Count" + statusLogin.toString());
@@ -32,7 +33,7 @@ class _CheckRouteState extends State<CheckRoute> {
         Navigator.of(context).pushReplacementNamed(UIData.loginRoute);
       }else{
          await getDataAccount();
-         http.post(configClass.syncData(), body: {"email":emailMember}).then((response) {
+         await http.post(configClass.syncData(), body: {"email":emailMember}).then((response) {
                 // databaseHelper.deleteAccount();
                 var extractdata = JSON.decode(response.body);
                 List dataResult;
@@ -47,9 +48,12 @@ class _CheckRouteState extends State<CheckRoute> {
                   int.tryParse( dataContent[0]["saldo"]),
                   1,
                 );
-                databaseHelper.saveAccount(dataAccount);
+                databaseHelper.updateAccount(dataAccount);
                 Navigator.of(context).pushReplacementNamed(UIData.homeRoute);
+
+                
           });
+       
       }
     })();
   }

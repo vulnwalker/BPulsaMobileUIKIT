@@ -19,6 +19,7 @@ import 'package:bpulsa/ui/page/task/task.dart';
 import 'package:bpulsa/ui/page/task/game.dart';
 import 'package:bpulsa/ui/page/about/about.dart';
 import 'package:bpulsa/ui/page/payment/payment.dart';
+import 'package:bpulsa/ui/page/barita/berita.dart';
 
 import 'package:bpulsa/utils/uidata.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
 
       //routes
       routes: <String, WidgetBuilder>{
+        UIData.beritaRoute: (BuildContext context) => Berita(),
         UIData.gameRoute: (BuildContext context) => Game(),
         UIData.aboutRoute: (BuildContext context) => About(),
         UIData.paymentRoute: (BuildContext context) => Payment(),

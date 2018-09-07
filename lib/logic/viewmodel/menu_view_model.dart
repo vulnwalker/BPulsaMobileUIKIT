@@ -35,7 +35,7 @@ class MenuViewModel {
         menuColor: Color(0xff7f5741),
         icon: Icons.timeline,
         image: UIData.timelineImage,
-        targetPage: "Feed"
+        targetPage: "berita"
       ),
       Menu(
         title: "Profile",

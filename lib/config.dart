@@ -14,6 +14,9 @@ class ConfigClass {
   String syncData(){
     return getHostName()+"member/sync";
   }
+  String getLogUser(){
+    return getHostName()+"member/log";
+  }
   String register(){
     return getHostName()+"member/add";
   }
@@ -29,11 +32,17 @@ class ConfigClass {
   String daftarPayment(){
     return getHostName()+"daftar/payment";
   }
-  String absesnHarian(){
+  String daftarBerita(){
+    return getHostName()+"daftar/news";
+  }
+  String absenHarian(){
     return getHostName()+"task/absen";
   }
   String requestAds(){
     return getHostName()+"ads";
+  }
+  String gameReward(){
+    return getHostName()+"task/game";
   }
   String getReward(){
     return getHostName()+"ads/reward";

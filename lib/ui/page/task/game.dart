@@ -7,9 +7,11 @@ import 'dart:convert';
 import 'package:bpulsa/database/DatabaseHelper.dart';
 import 'package:bpulsa/config.dart';
 import 'package:bpulsa/utils/uidata.dart';
+
 import 'package:bpulsa/ui/widgets/common_scaffold.dart';
 
 import 'package:firebase_admob/firebase_admob.dart';
+import 'package:flushbar/flushbar.dart';
 
 
 const APP_ID = "<Put in your Device ID>";
@@ -30,10 +32,24 @@ class GameState extends State<Game> {
     keywords: ['Games', 'Puzzles'],
   );
   int yourTap = 0;
-
+  String emailMember,namaMember;
+  int saldoMember;
+  String publicAdsName;
   BannerAd bannerAd;
   InterstitialAd interstitialAd;
   RewardedVideoAd rewardedVideoAd;
+  bool backButton = true;
+  bool showLoading = false;
+  ConfigClass configClass = new ConfigClass();
+
+  var databaseHelper = new  DatabaseHelper() ;
+  void getDataAccount() async{
+    var dbClient = await databaseHelper.db;
+    List<Map> list = await dbClient.rawQuery('SELECT * FROM tabel_account');
+    namaMember = list[0]["nama"];
+    emailMember = list[0]["email"];
+    saldoMember = list[0]["saldo"];
+  }
 
   BannerAd buildBanner() {
     return BannerAd(
@@ -43,8 +59,15 @@ class GameState extends State<Game> {
           print(event);
         });
   }
+    
+  void loadVideoAds(adsUnit) {
+    RewardedVideoAd.instance.load(
+      adUnitId: RewardedVideoAd.testAdUnitId,
+      targetingInfo: targetingInfo,
+    );
+  }
 
-  InterstitialAd buildInterstitial() {
+  InterstitialAd buildInterstitial(adUnit) {
     return InterstitialAd(
         adUnitId: InterstitialAd.testAdUnitId,
         targetingInfo: targetingInfo,
@@ -52,15 +75,89 @@ class GameState extends State<Game> {
           if (event == MobileAdEvent.failedToLoad) {
             interstitialAd..load();
           } else if (event == MobileAdEvent.closed) {
-            interstitialAd = buildInterstitial()..load();
+            // interstitialAd = buildInterstitial()..load();
+          }else if (event == MobileAdEvent.loaded) {
+            var dataPost = {
+                      "email":emailMember, 
+                      "adsName":publicAdsName, 
+                };
+            http.post(configClass.getReward(), body: dataPost).then((response) {
+              // var extractdata = JSON.decode(response.body);
+              // List dataResult;
+              // List dataContent;
+              // String err,cek;
+              // dataResult = extractdata["result"];
+              // err = dataResult[0]["err"];
+              // cek = dataResult[0]["cek"];
+              // dataContent = dataResult[0]["content"];
+            });
+            interstitialAd.show();
           }
           print(event);
         });
   }
+  void postReward(adsName){
+       var dataPost = {
+                   "email":emailMember, 
+                   "adsName":adsName, 
+             };
+        setState(() {
+                      showLoading =true;
+                      backButton =false;
+              });
 
-  final int rows = 9;
+        http.post(configClass.requestAds(), body: dataPost).then((response) {
+
+        var extractdata = JSON.decode(response.body);
+        List dataResult;
+        List dataContent;
+        String err,cek;
+        dataResult = extractdata["result"];
+        err = dataResult[0]["err"];
+        cek = dataResult[0]["cek"];
+        dataContent = dataResult[0]["content"];
+        print("ADS NAME  "+response.body);
+          if(err == ""){
+            publicAdsName = adsName;
+            if(adsName == "GAME WIN"){
+             loadVideoAds(dataContent[0]["ads_unit"]);
+            }else{
+             interstitialAd = buildInterstitial(dataContent[0]["ads_unit"])..load();
+            }
+          }else{
+            setState(() {
+                      showLoading =false;
+                      backButton =true;
+            });
+            Flushbar(
+              flushbarPosition: FlushbarPosition.TOP, //Immutable
+              reverseAnimationCurve: Curves.decelerate, //Immutable
+              forwardAnimationCurve: Curves.elasticOut, //Immutable
+            )
+              ..title = "Game Over"
+              ..message = "Bonus belum tersedia. Silahkan coba beberapa saat lagi"
+              ..duration = Duration(seconds: 3)
+              ..backgroundColor = Colors.red
+              ..backgroundColor = Colors.red
+              ..shadowColor = Colors.blue[800]
+              ..isDismissible = true
+              ..backgroundGradient = new LinearGradient(colors: [Colors.blue,Colors.black])
+              ..icon = Icon(
+                Icons.error,
+                color: Colors.greenAccent,
+              )
+              ..linearProgressIndicator = LinearProgressIndicator(
+                backgroundColor: Colors.blueGrey,
+              )
+              ..show(context);
+          }                
+
+        });
+     }
+
+  final int rows = 12;
   final int cols = 9;
-  final int numOfMines = 11;
+  final int numOfMines = 10;
 
   List<List<TileState>> uiState;
   List<List<bool>> tiles;
@@ -115,11 +212,88 @@ class GameState extends State<Game> {
   @override
   void initState() {
     super.initState();
+    (() async {
+      var asu = await getDataAccount();
+      setState(() {
+      });
+    })();
     resetBoard();
 
     FirebaseAdMob.instance.initialize(appId: FirebaseAdMob.testAppId);
     bannerAd = buildBanner()..load();
-    // interstitialAd = buildInterstitial()..load();
+    RewardedVideoAd.instance.listener =
+        (RewardedVideoAdEvent event, {String rewardType, int rewardAmount}) {
+      print("RewardedVideoAd event $event");
+      if (event == RewardedVideoAdEvent.failedToLoad) {
+        setState(() {
+                      showLoading =false;
+                      backButton =true;
+          });
+        AlertDialog dialog = new AlertDialog(
+            content: new Text("Gagal Load Video")
+        );
+        showDialog(context: context,child: dialog);
+      } 
+      if(event == RewardedVideoAdEvent.loaded){
+        setState(() {
+                      showLoading =false;
+                      backButton =true;
+        });
+        RewardedVideoAd.instance.show();
+        print("Iklan terload");
+      }
+
+      //onRewardedVideo
+      if(event == RewardedVideoAdEvent.closed){
+        setState(() {
+                      showLoading =false;
+                      backButton =true;
+        });
+        var dataPost = {
+                   "email":emailMember, 
+                   "adsName":publicAdsName, 
+             };
+        http.post(configClass.getReward(), body: dataPost).then((response) {
+          var extractdata = JSON.decode(response.body);
+          List dataResult;
+          List dataContent;
+          String err,cek;
+          dataResult = extractdata["result"];
+          err = dataResult[0]["err"];
+          cek = dataResult[0]["cek"];
+          dataContent = dataResult[0]["content"];
+          (() async {
+            var dbClient = await databaseHelper.db;
+            saldoMember = saldoMember + int.tryParse(dataContent[0]["point"]);
+            await dbClient.rawQuery("update tabel_account set saldo = '"+saldoMember.toString()+"'");
+          })();
+          Flushbar(
+              flushbarPosition: FlushbarPosition.TOP, //Immutable
+              reverseAnimationCurve: Curves.decelerate, //Immutable
+              forwardAnimationCurve: Curves.elasticOut, //Immutable
+            )
+              ..title = "Game Over"
+              ..message = "Anda mendapatkan point "+dataContent[0]["point"]
+              ..duration = Duration(seconds: 3)
+              ..backgroundColor = Colors.red
+              ..backgroundColor = Colors.red
+              ..shadowColor = Colors.blue[800]
+              ..isDismissible = true
+              ..backgroundGradient = new LinearGradient(colors: [Colors.blue,Colors.black])
+              ..icon = Icon(
+                Icons.error,
+                color: Colors.greenAccent,
+              )
+              ..linearProgressIndicator = LinearProgressIndicator(
+                backgroundColor: Colors.blueGrey,
+              )
+              ..show(context);
+          setState(() {
+          });
+        });
+      }
+
+    };
   }
 
   Widget buildBoard() {
@@ -176,7 +350,7 @@ class GameState extends State<Game> {
     int timeElapsed = stopwatch.elapsedMilliseconds ~/ 1000;
 
     return Container(
-      color: Colors.grey[700],
+      color: Colors.white,
       padding: EdgeInsets.all(10.0),
       child: Column(
         children: <Widget>[
@@ -255,10 +429,32 @@ class GameState extends State<Game> {
         alive = false;
         timer.cancel();
         stopwatch.stop(); // force the stopwatch to stop.
-        AlertDialog dialog = new AlertDialog(
-            content: new Text("Your Tap : "+yourTap.toString())
-        );
-        showDialog(context: context,child: dialog);
+         Flushbar(
+              flushbarPosition: FlushbarPosition.TOP, //Immutable
+              reverseAnimationCurve: Curves.decelerate, //Immutable
+              forwardAnimationCurve: Curves.elasticOut, //Immutable
+            )
+              ..title = "Game Over"
+              ..message = "Your tap "+yourTap.toString()
+              ..duration = Duration(seconds: 3)
+              ..backgroundColor = Colors.red
+              ..backgroundColor = Colors.red
+              ..shadowColor = Colors.blue[800]
+              ..isDismissible = true
+              ..backgroundGradient = new LinearGradient(colors: [Colors.blue,Colors.black])
+              ..icon = Icon(
+                Icons.error,
+                color: Colors.greenAccent,
+              )
+              ..linearProgressIndicator = LinearProgressIndicator(
+                backgroundColor: Colors.blueGrey,
+              )
+              ..show(context);
+        if(yourTap >= 10){
+          postReward("GAME WIN");
+        }else{
+          postReward("GAME LOSE");
+        }
       } else {
         open(x, y);
         yourTap = yourTap + 1;
