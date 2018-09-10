@@ -102,6 +102,7 @@ class BeritaState extends State<Berita> {
               for (var i = 0; i < dataContent.length; i++) {
                 kolom.add( 
                     BeritaModel(
+                            idBerita: dataContent[i]['id'],
                             judulBerita: dataContent[i]['title'],
                             message: dataContent[i]['content'],
                             messageImage: dataContent[i]['gambar'],
@@ -135,7 +136,16 @@ class BeritaState extends State<Berita> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[
-                            Text(kolom[index].judulBerita)
+                            new Flexible(
+                              child: new Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  new Text(
+                                    kolom[index].judulBerita,   
+                                  )
+                                ],
+                              ),
+                            ),
                             ],
                           ),
                         ),
@@ -146,6 +156,21 @@ class BeritaState extends State<Berita> {
                             style: TextStyle(
                                 fontWeight: FontWeight.normal,
                                 fontFamily: UIData.ralewayFont),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              print("onTap called.");
+                            },
+                            child: Text(
+                              "[ READ MODE ]",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  color: Colors.blue,
+                                  fontFamily: UIData.ralewayFont),
+                            ),
                           ),
                         ),
                         SizedBox(

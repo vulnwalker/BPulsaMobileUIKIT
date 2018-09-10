@@ -1,4 +1,5 @@
 class BeritaModel {
+  String idBerita;
   String judulBerita;
   String message;
   String messageImage;
@@ -7,6 +8,7 @@ class BeritaModel {
 
   BeritaModel(
       {
+      this.idBerita,
       this.judulBerita,
       this.message,
       this.messageImage,
