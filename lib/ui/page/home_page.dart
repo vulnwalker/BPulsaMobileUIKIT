@@ -176,7 +176,7 @@ class HomePageState extends State<HomePage> {
        databaseHelper.deleteAccount();
        Navigator.pushReplacementNamed(context, "/${menu.targetPage}");
     }else if(menu.targetPage == "Share"){
-      Share.share("Ayo bergabung dengan kami di BPulsa, banyak hadiah menarik setiap hari nya. Gunakan Referal saya http://bpulsa.rm-rf.studio/ref/vulnwalker. Check On Play Store");
+      Share.share("Ayo bergabung dengan kami di BPulsa, banyak hadiah menarik setiap hari nya. Gunakan Email Referal saya $emailMember Download Applikasi nya di  https://play.google.com/store/apps/details?id=com.bonuspulsa.bpulsa&hl=en");
     }else{
       Navigator.pushNamed(context, "/${menu.targetPage}");
     }
@@ -370,6 +370,24 @@ class HomePageState extends State<HomePage> {
           ],
         ),
       ) ?? false;
+  }
+
+
+  var databaseHelper = new  DatabaseHelper() ;
+  String emailMember = "";
+  void getDataAccount() async{
+    var dbClient = await databaseHelper.db;
+    List<Map> list = await dbClient.rawQuery('SELECT * FROM tabel_account');
+    emailMember = list[0]["email"];
+  }
+  @override
+  void initState() {
+    super.initState();
+    (() async {
+      var asu = await getDataAccount();
+      setState(() {
+      });
+    })();
   }
   @override
   Widget build(BuildContext context) {

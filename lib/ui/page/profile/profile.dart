@@ -19,7 +19,7 @@ class Profile extends StatefulWidget {
 
 class ProfileState extends State<Profile> {
   Size deviceSize;
-  String emailMember,namaMember,teleponMember;
+  String emailMember,namaMember,teleponMember,referalEmail;
   int saldoMember;
   String jumlahPenukaran = "0";
   String jumlahAbsen = "0";
@@ -50,6 +50,7 @@ class ProfileState extends State<Profile> {
           setState(() {
              jumlahPenukaran = dataContent[0]["penukaran"];
              jumlahAbsen = dataContent[0]["absen"];
+             referalEmail = dataContent[0]["referalEmail"];
            });
       
          
@@ -180,6 +181,8 @@ class ProfileState extends State<Profile> {
           CommonDivider(),
           followColumn(deviceSize),
           CommonDivider(),
+          infoColumn(deviceSize),
+          CommonDivider(),
           descColumn(),
           CommonDivider(),
           // accountColumn()
@@ -213,12 +216,30 @@ class ProfileState extends State<Profile> {
           ),
           ProfileTile(
             title: "Penukaran",
-            subtitle: jumlahPenukaran,
+            subtitle: jumlahPenukaran.toString(),
           ),
           ProfileTile(
             title: "Absen",
             subtitle: jumlahAbsen,
           ),
+       
+        ],
+      ),
+    );
+  Widget infoColumn(Size deviceSize) => Container(
+      height: deviceSize.height * 0.13,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          ProfileTile(
+            title: "Point",
+            subtitle: saldoMember.toString(),
+          ),
+          ProfileTile(
+            title: "Referal",
+            subtitle: referalEmail.toString(),
+          ),
+
        
         ],
       ),

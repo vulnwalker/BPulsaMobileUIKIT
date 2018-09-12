@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Thu Aug 30 22:30:23 WIB 2018
+#Mon Sep 10 20:46:48 WIB 2018
 17.baseType=DIRECTORY
 4.path=isolate_snapshot_instr
 25.base=/home/kszxpo/AndroidStudioProjects/BPulsaMobileUIKIT/build/app/intermediates/assets/release

@@ -35,6 +35,9 @@ class ConfigClass {
   String daftarBerita(){
     return getHostName()+"daftar/news";
   }
+  String getDetailBerita(){
+    return getHostName()+"berita/detail";
+  }
   String absenHarian(){
     return getHostName()+"task/absen";
   }

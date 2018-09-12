@@ -25,7 +25,10 @@ android.arch.lifecycle.Lifecycle:
     public abstract void addObserver(android.arch.lifecycle.LifecycleObserver)
     public abstract void removeObserver(android.arch.lifecycle.LifecycleObserver)
     public abstract android.arch.lifecycle.Lifecycle$State getCurrentState()
+android.arch.lifecycle.Lifecycle$Event:
+    108:108:public static android.arch.lifecycle.Lifecycle$Event valueOf(java.lang.String)
 android.arch.lifecycle.Lifecycle$State:
+    144:144:public static android.arch.lifecycle.Lifecycle$State valueOf(java.lang.String)
     193:193:public boolean isAtLeast(android.arch.lifecycle.Lifecycle$State)
 android.arch.lifecycle.LifecycleObserver
 android.arch.lifecycle.LifecycleRegistry:
@@ -2729,6 +2732,10 @@ com.google.ads.AdRequest:
     public static final java.lang.String LOGTAG
     public static final java.lang.String TEST_EMULATOR
     private AdRequest()
+com.google.ads.AdRequest$ErrorCode:
+    public static com.google.ads.AdRequest$ErrorCode valueOf(java.lang.String)
+com.google.ads.AdRequest$Gender:
+    public static com.google.ads.AdRequest$Gender valueOf(java.lang.String)
 com.google.ads.AdSize:
     public static final int FULL_WIDTH
     public static final int AUTO_HEIGHT
@@ -2830,11 +2837,17 @@ com.google.android.gms.ads.AdSize:
 com.google.android.gms.ads.AdView:
     public AdView(android.content.Context,android.util.AttributeSet)
     public AdView(android.content.Context,android.util.AttributeSet,int)
+    public final bridge synthetic java.lang.String getMediationAdapterClassName()
     public final bridge synthetic boolean isLoading()
+    public final bridge synthetic java.lang.String getAdUnitId()
+    public final bridge synthetic com.google.android.gms.ads.AdListener getAdListener()
 com.google.android.gms.ads.BaseAdView:
     public BaseAdView(android.content.Context,android.util.AttributeSet,int)
     public BaseAdView(android.content.Context,android.util.AttributeSet,int,int)
+    public com.google.android.gms.ads.AdListener getAdListener()
+    public java.lang.String getAdUnitId()
     public boolean isLoading()
+    public java.lang.String getMediationAdapterClassName()
 com.google.android.gms.ads.Correlator:
     public Correlator()
     public final void reset()
@@ -2897,11 +2910,27 @@ com.google.android.gms.ads.doubleclick.PublisherAdView:
     public PublisherAdView(android.content.Context)
     public PublisherAdView(android.content.Context,android.util.AttributeSet)
     public PublisherAdView(android.content.Context,android.util.AttributeSet,int)
+    public final com.google.android.gms.ads.VideoController getVideoController()
+    public final void setVideoOptions(com.google.android.gms.ads.VideoOptions)
+    public final com.google.android.gms.ads.VideoOptions getVideoOptions()
     public final void destroy()
+    public final com.google.android.gms.ads.AdListener getAdListener()
+    public final com.google.android.gms.ads.AdSize[] getAdSizes()
+    public final java.lang.String getAdUnitId()
+    public final com.google.android.gms.ads.doubleclick.AppEventListener getAppEventListener()
+    public final com.google.android.gms.ads.doubleclick.OnCustomRenderedAdLoadedListener getOnCustomRenderedAdLoadedListener()
     public final void loadAd(com.google.android.gms.ads.doubleclick.PublisherAdRequest)
     public final void pause()
+    public final void setManualImpressionsEnabled(boolean)
     public final void recordManualImpression()
     public final void resume()
+    public final void setAdListener(com.google.android.gms.ads.AdListener)
+    public final varargs void setAdSizes(com.google.android.gms.ads.AdSize[])
+    public final void setAdUnitId(java.lang.String)
+    public final void setAppEventListener(com.google.android.gms.ads.doubleclick.AppEventListener)
+    public final void setCorrelator(com.google.android.gms.ads.Correlator)
+    public final void setOnCustomRenderedAdLoadedListener(com.google.android.gms.ads.doubleclick.OnCustomRenderedAdLoadedListener)
+    public final java.lang.String getMediationAdapterClassName()
     public final boolean isLoading()
     public final boolean zza(com.google.android.gms.internal.ads.zzks)
 com.google.android.gms.ads.doubleclick.PublisherInterstitialAd:
@@ -2953,6 +2982,10 @@ com.google.android.gms.ads.formats.NativeAdView:
     public NativeAdView(android.content.Context,android.util.AttributeSet)
     public NativeAdView(android.content.Context,android.util.AttributeSet,int)
     public NativeAdView(android.content.Context,android.util.AttributeSet,int,int)
+    public void setAdChoicesView(com.google.android.gms.ads.formats.AdChoicesView)
+    public com.google.android.gms.ads.formats.AdChoicesView getAdChoicesView()
+    protected final void zza(java.lang.String,android.view.View)
+    protected final android.view.View zzp(java.lang.String)
     public void destroy()
     private final android.widget.FrameLayout zzb(android.content.Context)
     private final com.google.android.gms.internal.ads.zzqa zzbf()
@@ -3025,6 +3058,31 @@ com.google.android.gms.ads.formats.UnifiedNativeAdView:
     public UnifiedNativeAdView(android.content.Context,android.util.AttributeSet)
     public UnifiedNativeAdView(android.content.Context,android.util.AttributeSet,int)
     public UnifiedNativeAdView(android.content.Context,android.util.AttributeSet,int,int)
+    private final void zza(java.lang.String,android.view.View)
+    public final void setHeadlineView(android.view.View)
+    public final void setCallToActionView(android.view.View)
+    public final void setIconView(android.view.View)
+    public final void setBodyView(android.view.View)
+    public final void setAdvertiserView(android.view.View)
+    public final void setStoreView(android.view.View)
+    public final void setClickConfirmingView(android.view.View)
+    public final void setPriceView(android.view.View)
+    public final void setImageView(android.view.View)
+    public final void setStarRatingView(android.view.View)
+    public final void setMediaView(com.google.android.gms.ads.formats.MediaView)
+    public final void setAdChoicesView(com.google.android.gms.ads.formats.AdChoicesView)
+    private final android.view.View zzp(java.lang.String)
+    public final android.view.View getHeadlineView()
+    public final android.view.View getCallToActionView()
+    public final android.view.View getIconView()
+    public final android.view.View getBodyView()
+    public final android.view.View getStoreView()
+    public final android.view.View getPriceView()
+    public final android.view.View getAdvertiserView()
+    public final android.view.View getImageView()
+    public final android.view.View getStarRatingView()
+    public final com.google.android.gms.ads.formats.MediaView getMediaView()
+    public final com.google.android.gms.ads.formats.AdChoicesView getAdChoicesView()
     public final void destroy()
     private final android.widget.FrameLayout zzb(android.content.Context)
     private final com.google.android.gms.internal.ads.zzqa zzbf()
@@ -3150,10 +3208,15 @@ com.google.android.gms.ads.search.SearchAdView:
     public SearchAdView(android.content.Context,android.util.AttributeSet)
     public SearchAdView(android.content.Context,android.util.AttributeSet,int)
     public final void destroy()
+    public final com.google.android.gms.ads.AdListener getAdListener()
+    public final java.lang.String getAdUnitId()
     public final void loadAd(com.google.android.gms.ads.search.SearchAdRequest)
     public final void loadAd(com.google.android.gms.ads.search.DynamicHeightSearchAdRequest)
     public final void pause()
     public final void resume()
+    public final void setAdListener(com.google.android.gms.ads.AdListener)
+    public final void setAdSize(com.google.android.gms.ads.AdSize)
+    public final void setAdUnitId(java.lang.String)
 com.google.android.gms.ads.search.zza
 com.google.android.gms.ads.search.zzb
 com.google.android.gms.ads.zzc
@@ -3199,9 +3262,31 @@ com.google.android.gms.base.R:
 com.google.android.gms.base.R$attr
 com.google.android.gms.base.R$color
 com.google.android.gms.base.R$drawable:
+    public static final int common_google_signin_btn_icon_dark
+    public static final int common_google_signin_btn_icon_dark_focused
+    public static final int common_google_signin_btn_icon_dark_normal
+    public static final int common_google_signin_btn_icon_dark_normal_background
+    public static final int common_google_signin_btn_icon_disabled
+    public static final int common_google_signin_btn_icon_light
+    public static final int common_google_signin_btn_icon_light_focused
+    public static final int common_google_signin_btn_icon_light_normal
+    public static final int common_google_signin_btn_icon_light_normal_background
+    public static final int common_google_signin_btn_text_dark
+    public static final int common_google_signin_btn_text_dark_focused
+    public static final int common_google_signin_btn_text_dark_normal
+    public static final int common_google_signin_btn_text_dark_normal_background
+    public static final int common_google_signin_btn_text_disabled
+    public static final int common_google_signin_btn_text_light
+    public static final int common_google_signin_btn_text_light_focused
+    public static final int common_google_signin_btn_text_light_normal
+    public static final int common_google_signin_btn_text_light_normal_background
+    public static final int googleg_disabled_color_18
+    public static final int googleg_standard_color_18
     31:31:public R$drawable()
 com.google.android.gms.base.R$id
 com.google.android.gms.base.R$string:
+    public static final int common_signin_button_text
+    public static final int common_signin_button_text_long
     65:65:public R$string()
 com.google.android.gms.base.R$styleable
 com.google.android.gms.common.AccountPicker
@@ -4551,6 +4636,12 @@ com.google.android.gms.internal.ads.zzahm:
 com.google.android.gms.internal.ads.zzaif:
     public final void onInitializationFailed(com.google.android.gms.ads.reward.mediation.MediationRewardedVideoAdAdapter,int)
     public final void onAdClicked(com.google.android.gms.ads.reward.mediation.MediationRewardedVideoAdAdapter)
+com.google.android.gms.internal.ads.zzaxi$zzb:
+    public static com.google.android.gms.internal.ads.zzaxi$zzb[] values()
+com.google.android.gms.internal.ads.zzaxl:
+    public static com.google.android.gms.internal.ads.zzaxl[] values()
+com.google.android.gms.internal.ads.zzhu$zza$zzb:
+    public static com.google.android.gms.internal.ads.zzhu$zza$zzb[] values()
 com.google.android.gms.internal.ads.zzjf:
     public final com.google.android.gms.ads.AdListener getAdListener()
 com.google.android.gms.internal.ads.zzjp:
@@ -4583,8 +4674,19 @@ com.google.android.gms.internal.ads.zzly:
     public zzly(android.view.ViewGroup)
     public zzly(android.view.ViewGroup,android.util.AttributeSet,boolean)
     public zzly(android.view.ViewGroup,android.util.AttributeSet,boolean,int)
+    public final com.google.android.gms.ads.AdListener getAdListener()
+    public final com.google.android.gms.ads.AdSize[] getAdSizes()
+    public final java.lang.String getAdUnitId()
+    public final com.google.android.gms.ads.doubleclick.AppEventListener getAppEventListener()
+    public final com.google.android.gms.ads.doubleclick.OnCustomRenderedAdLoadedListener getOnCustomRenderedAdLoadedListener()
     public final void recordManualImpression()
+    public final void setOnCustomRenderedAdLoadedListener(com.google.android.gms.ads.doubleclick.OnCustomRenderedAdLoadedListener)
+    public final void setManualImpressionsEnabled(boolean)
+    public final void setCorrelator(com.google.android.gms.ads.Correlator)
+    public final java.lang.String getMediationAdapterClassName()
     public final boolean isLoading()
+    public final void setVideoOptions(com.google.android.gms.ads.VideoOptions)
+    public final com.google.android.gms.ads.VideoOptions getVideoOptions()
     public final boolean zza(com.google.android.gms.internal.ads.zzks)
 com.google.android.gms.internal.ads.zzma:
     public zzma(android.content.Context,com.google.android.gms.ads.doubleclick.PublisherInterstitialAd)
@@ -4670,6 +4772,8 @@ com.google.android.gms.internal.ads.zzrw:
 com.google.android.gms.internal.ads.zzsb
 com.google.android.gms.internal.ads.zzsc
 com.google.android.gms.internal.ads.zzse
+com.google.android.gms.internal.ads.zzu:
+    public static com.google.android.gms.internal.ads.zzu[] values()
 com.google.android.gms.internal.ads.zzyl:
     public final void onVideoEnd(com.google.android.gms.ads.mediation.MediationNativeAdapter)
 com.google.android.gms.internal.ads.zzyo:
@@ -4761,6 +4865,64 @@ com.google.android.gms.internal.measurement.zzace:
     public static final void zza(com.google.android.gms.internal.measurement.zzace,byte[],int,int)
     public static final com.google.android.gms.internal.measurement.zzace zza(com.google.android.gms.internal.measurement.zzace,byte[])
     private static final com.google.android.gms.internal.measurement.zzace zzb(com.google.android.gms.internal.measurement.zzace,byte[],int,int)
+com.google.android.gms.internal.measurement.zzef:
+    public final double zzc(java.lang.String,com.google.android.gms.internal.measurement.zzex)
+    final java.lang.String zzhm()
+com.google.android.gms.internal.measurement.zzfc:
+    public final void resetAnalyticsData()
+com.google.android.gms.internal.measurement.zzfr:
+    private java.lang.String zzakf
+    private long zzakg
+    final void zzbr(java.lang.String)
+    final java.lang.String zzja()
+com.google.android.gms.internal.measurement.zzgg:
+    private java.util.concurrent.ExecutorService zzaln
+    final java.lang.Object zza(java.util.concurrent.atomic.AtomicReference,long,java.lang.String,java.lang.Runnable)
+    final java.util.concurrent.ExecutorService zzjl()
+com.google.android.gms.internal.measurement.zzhk:
+    public final java.lang.Boolean zzjx()
+    public final java.lang.String zzhm()
+    public final java.lang.Long zzjy()
+    public final java.lang.Integer zzjz()
+    public final java.lang.Double zzka()
+    public final void setMeasurementEnabled(boolean)
+    private final void zzi(boolean)
+    public final void setMinimumSessionDuration(long)
+    public final void setSessionTimeoutDuration(long)
+    public final void zza(java.lang.String,java.lang.String,android.os.Bundle,boolean)
+    public final void zza(java.lang.String,java.lang.String,android.os.Bundle,long)
+    public final java.util.List zzj(boolean)
+    public final com.google.android.gms.tasks.Task getAppInstanceId()
+    final java.lang.String zzae(long)
+    public final void resetAnalyticsData()
+    public final void setEventInterceptor(com.google.android.gms.measurement.AppMeasurement$EventInterceptor)
+    public final void registerOnMeasurementEventListener(com.google.android.gms.measurement.AppMeasurement$OnEventListener)
+    public final void unregisterOnMeasurementEventListener(com.google.android.gms.measurement.AppMeasurement$OnEventListener)
+    static synthetic void zza(com.google.android.gms.internal.measurement.zzhk,boolean)
+com.google.android.gms.internal.measurement.zzhl:
+    zzhl(com.google.android.gms.internal.measurement.zzhk,java.util.concurrent.atomic.AtomicReference)
+com.google.android.gms.internal.measurement.zzhn
+com.google.android.gms.internal.measurement.zzho
+com.google.android.gms.internal.measurement.zzhp
+com.google.android.gms.internal.measurement.zzhq
+com.google.android.gms.internal.measurement.zzhv
+com.google.android.gms.internal.measurement.zzhw
+com.google.android.gms.internal.measurement.zzhx
+com.google.android.gms.internal.measurement.zzhy
+com.google.android.gms.internal.measurement.zzhz
+com.google.android.gms.internal.measurement.zzia
+com.google.android.gms.internal.measurement.zzib
+com.google.android.gms.internal.measurement.zzii:
+    protected final void zzke()
+    protected final void zza(java.util.concurrent.atomic.AtomicReference,boolean)
+    protected final void resetAnalyticsData()
+com.google.android.gms.internal.measurement.zzik
+com.google.android.gms.internal.measurement.zzip
+com.google.android.gms.internal.measurement.zziv
+com.google.android.gms.internal.measurement.zzjh:
+    final void zzkj()
+com.google.android.gms.internal.measurement.zzka:
+    public final int zzce(java.lang.String)
 com.google.android.gms.internal.measurement.zzn:
     protected final void transactOneway(int,android.os.Parcel)
 com.google.android.gms.internal.measurement.zzp:
@@ -4823,6 +4985,25 @@ com.google.android.gms.internal.stable.zzm
 com.google.android.gms.internal.stable.zzn
 com.google.android.gms.internal.stable.zzo
 com.google.android.gms.internal.stable.zzp
+com.google.android.gms.measurement.AppMeasurement:
+    public static final java.lang.String CRASH_ORIGIN
+    public static final java.lang.String FCM_ORIGIN
+    public final void logEvent(java.lang.String,android.os.Bundle)
+    public final void setUserProperty(java.lang.String,java.lang.String)
+    public void setMeasurementEnabled(boolean)
+    public final void setMinimumSessionDuration(long)
+    public final void setSessionTimeoutDuration(long)
+    public void logEventInternalNoInterceptor(java.lang.String,java.lang.String,android.os.Bundle,long)
+    public void setUserPropertyInternal(java.lang.String,java.lang.String,java.lang.Object)
+    public java.util.Map getUserProperties(boolean)
+    public void setEventInterceptor(com.google.android.gms.measurement.AppMeasurement$EventInterceptor)
+    public void registerOnMeasurementEventListener(com.google.android.gms.measurement.AppMeasurement$OnEventListener)
+    public void unregisterOnMeasurementEventListener(com.google.android.gms.measurement.AppMeasurement$OnEventListener)
+    public java.lang.Boolean getBoolean()
+    public java.lang.String getString()
+    public java.lang.Long getLong()
+    public java.lang.Integer getInteger()
+    public java.lang.Double getDouble()
 com.google.android.gms.measurement.AppMeasurement$Event:
     public static final java.lang.String APP_EXCEPTION
     public static final java.lang.String AD_REWARD
@@ -4932,8 +5113,11 @@ com.google.android.gms.tasks.TaskCompletionSource:
 com.google.android.gms.tasks.TaskExecutors:
     private TaskExecutors()
 com.google.android.gms.tasks.Tasks:
+    public static com.google.android.gms.tasks.Task forResult(java.lang.Object)
+    public static com.google.android.gms.tasks.Task forException(java.lang.Exception)
     public static com.google.android.gms.tasks.Task forCanceled()
     public static com.google.android.gms.tasks.Task call(java.util.concurrent.Callable)
+    public static com.google.android.gms.tasks.Task call(java.util.concurrent.Executor,java.util.concurrent.Callable)
     public static com.google.android.gms.tasks.Task whenAll(java.util.Collection)
     public static varargs com.google.android.gms.tasks.Task whenAll(com.google.android.gms.tasks.Task[])
     public static com.google.android.gms.tasks.Task whenAllSuccess(java.util.Collection)
@@ -4975,6 +5159,8 @@ com.google.android.gms.tasks.zzu:
     public final com.google.android.gms.tasks.Task onSuccessTask(java.util.concurrent.Executor,com.google.android.gms.tasks.SuccessContinuation)
     public final com.google.android.gms.tasks.Task onSuccessTask(com.google.android.gms.tasks.SuccessContinuation)
 com.google.android.gms.tasks.zzu$zza
+com.google.android.gms.tasks.zzv:
+    zzv(com.google.android.gms.tasks.zzu,java.util.concurrent.Callable)
 com.google.android.gms.tasks.zzw
 com.google.android.gms.tasks.zzx
 com.google.firebase.FirebaseApiNotAvailableException
@@ -5017,6 +5203,15 @@ com.google.firebase.FirebaseOptions:
     synthetic FirebaseOptions(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,com.google.firebase.zzb)
 com.google.firebase.FirebaseOptions$Builder
 com.google.firebase.FirebaseTooManyRequestsException
+com.google.firebase.analytics.FirebaseAnalytics:
+    public final void logEvent(java.lang.String,android.os.Bundle)
+    public final void setUserProperty(java.lang.String,java.lang.String)
+    public final void setAnalyticsCollectionEnabled(boolean)
+    public final void setUserId(java.lang.String)
+    public final void setMinimumSessionDuration(long)
+    public final void setSessionTimeoutDuration(long)
+    public final com.google.android.gms.tasks.Task getAppInstanceId()
+    public final void resetAnalyticsData()
 com.google.firebase.analytics.FirebaseAnalytics$Event:
     public static final java.lang.String ADD_PAYMENT_INFO
     public static final java.lang.String ADD_TO_CART

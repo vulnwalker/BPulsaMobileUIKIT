@@ -14,7 +14,7 @@ class Register extends StatefulWidget {
 }
 
 class RegisterState extends State<Register> {
-  String email,password,passwordConfirm,nama,nomorTelepon = "";
+  String email,password,passwordConfirm,nama,nomorTelepon,referalEmail = "";
   Size deviceSize;
   bool backButton = true;
   bool showLoading = false;
@@ -96,6 +96,19 @@ class RegisterState extends State<Register> {
               ),
             ),
           ),
+          new ListTile(
+            leading: const Icon(Icons.email),
+            title: new TextField(
+              onChanged: (String text) {
+                referalEmail = text;
+              },
+              keyboardType: TextInputType.emailAddress,
+              autofocus: false,
+              decoration: InputDecoration(
+                hintText: 'Referal Email',
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -147,6 +160,7 @@ class RegisterState extends State<Register> {
                   "password": passwordConfirm,
                   "nama": nama,
                   "nomorTelepon": nomorTelepon,
+                  "referalEmail": referalEmail,
                   };
                 http.post(configClass.register(), body: dataPost).then((response) {
                     setState(() {

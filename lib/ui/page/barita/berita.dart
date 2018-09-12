@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bpulsa/ui/widgets/common_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:bpulsa/model/berita.dart';
+import 'package:bpulsa/ui/page/barita/DetailBerita.dart';
 import 'package:bpulsa/ui/widgets/common_scaffold.dart';
 import 'package:bpulsa/config.dart';
 import 'package:bpulsa/utils/uidata.dart';
@@ -10,6 +11,7 @@ import 'package:http/http.dart' as http;
 import 'package:bpulsa/database/DatabaseHelper.dart';
 import 'dart:convert';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:firebase_admob/firebase_admob.dart';
 class Berita extends StatefulWidget {
   
 
@@ -35,9 +37,21 @@ class BeritaState extends State<Berita> {
   ScrollController _scrollController = new ScrollController();
   bool isPerformingRequest = false;
 
+  BannerAd bannerAd;
+  BannerAd buildBanner() {
+    return BannerAd(
+        adUnitId: BannerAd.testAdUnitId,
+        size: AdSize.banner,
+        listener: (MobileAdEvent event) {
+          print(event);
+        });
+  }
+
   @override
   void initState() {
     super.initState();
+    bannerAd = buildBanner()..load();
+
     _getMoreData();
     _scrollController.addListener(() {
       if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
@@ -49,6 +63,7 @@ class BeritaState extends State<Berita> {
   @override
   void dispose() {
     _scrollController.dispose();
+    bannerAd?.dispose();
     super.dispose();
   }
 
@@ -112,6 +127,7 @@ class BeritaState extends State<Berita> {
               }
               limitFrom = limitFrom + dataContent.length ;
             }
+            // print(response.body);
         
       });
       return List.generate(to - from, (i) => i + from);
@@ -163,6 +179,12 @@ class BeritaState extends State<Berita> {
                           child: GestureDetector(
                             onTap: () {
                               print("onTap called.");
+                              Navigator.push(
+                                context,
+                                new MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      new DetailBerita(kolom[index].idBerita),
+                                ));
                             },
                             child: Text(
                               "[ READ MODE ]",
@@ -195,6 +217,8 @@ class BeritaState extends State<Berita> {
 
   @override
   Widget build(BuildContext context) {
+    bannerAd.show();
+
     return CommonScaffold(
       scaffoldKey: scaffoldKey,
       appTitle: "News",
@@ -204,4 +228,7 @@ class BeritaState extends State<Berita> {
       bodyData: bodyData(context),
     );
   }
+}
+
+class DetailPage {
 }

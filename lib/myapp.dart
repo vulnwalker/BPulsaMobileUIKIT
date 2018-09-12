@@ -20,11 +20,16 @@ import 'package:bpulsa/ui/page/task/game.dart';
 import 'package:bpulsa/ui/page/about/about.dart';
 import 'package:bpulsa/ui/page/payment/payment.dart';
 import 'package:bpulsa/ui/page/barita/berita.dart';
+import 'package:bpulsa/ui/page/barita/DetailBerita.dart';
 
 import 'package:bpulsa/utils/uidata.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:bpulsa/model/berita.dart';
 
 class MyApp extends StatelessWidget {
+  // BeritaModel beritaModel = new BeritaModel();
+
+  // List<String> titles = [];
   final materialApp = MaterialApp(
       title: UIData.appName,
       theme: ThemeData(
@@ -39,6 +44,7 @@ class MyApp extends StatelessWidget {
       //routes
       routes: <String, WidgetBuilder>{
         UIData.beritaRoute: (BuildContext context) => Berita(),
+        // UIData.detailBerita: (BuildContext context ) => DetailBerita(beritaModel.idBerita.toString()),
         UIData.gameRoute: (BuildContext context) => Game(),
         UIData.aboutRoute: (BuildContext context) => About(),
         UIData.paymentRoute: (BuildContext context) => Payment(),

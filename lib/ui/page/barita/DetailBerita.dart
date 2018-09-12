@@ -1,246 +1,172 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:bpulsa/model/login.dart';
 import 'package:bpulsa/config.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'dart:convert' show utf8, base64, JSON;
 import 'package:bpulsa/database/DatabaseHelper.dart';
 import 'package:bpulsa/database/model/account.dart';
 import 'package:bpulsa/utils/uidata.dart';
 import 'package:bpulsa/ui/page/home_page.dart';
 import 'dart:async';
+import 'package:bpulsa/ui/widgets/profile_tile.dart';
+import 'package:bpulsa/ui/widgets/common_divider.dart';
+import 'package:bpulsa/ui/widgets/common_scaffold.dart';
+import 'package:flutter_html_view/flutter_html_view.dart';
+import 'package:firebase_admob/firebase_admob.dart';
+
+
+
 ConfigClass configClass = new ConfigClass();
-class DetailBerita extends StatefulWidget {
+class DetailBerita extends StatefulWidget { 
+ final String idBerita;
+
+   DetailBerita(this.idBerita) ;
   @override
    DetailBeritaState createState() => new DetailBeritaState();
 }
 
 class DetailBeritaState extends State<DetailBerita> {
   Size deviceSize;
-  String email,password,passwordConfirm,nama,nomorTelepon = "";
-  String oldEmail ;
+  String judulBerita,contentBeritaHTML;
+  int saldoMember;
+  String jumlahPenukaran = "0";
+  String jumlahAbsen = "0";
   ConfigClass configClass = new ConfigClass();
-  var databaseHelper = new  DatabaseHelper() ;
-  bool backButton = true;
-  bool showLoading = false;
+  BannerAd bannerAd;
+  BannerAd buildBanner() {
+    return BannerAd(
+        adUnitId: BannerAd.testAdUnitId,
+        size: AdSize.banner,
+        listener: (MobileAdEvent event) {
+          print(event);
+        });
+  }
+  void getContentBerita()  {
+     http.post(configClass.getDetailBerita(), body: {"idBerita" :widget.idBerita}).then((response) {
+          var extractdata = JSON.decode(response.body);
+          List dataResult;
+          List dataContent;
+          String err,cek;
+          dataResult = extractdata["result"];
+          err = dataResult[0]["err"];
+          cek = dataResult[0]["cek"];
+          dataContent = dataResult[0]["content"];
+          judulBerita = dataContent[0]["judulBerita"];
+          String baseHTML = dataContent[0]["contentBerita"].toString();
+          contentBeritaHTML = utf8.decode(base64.decode(baseHTML));
+          print("DECODE : " + contentBeritaHTML);
+          setState(() {
+            
+            //  print(contentBeritaHTML+ " ASU");
+           });
+      
+         
+        });
 
-  void getDataAccount() async{
-    var dbClient = await databaseHelper.db;
-        List<Map> list = await dbClient.rawQuery('SELECT * FROM tabel_account');
-        email = list[0]["email"];
-        nama = list[0]["nama"];
-        oldEmail = list[0]["email"];
-        password = list[0]["password"];
-        passwordConfirm = list[0]["password"];
-        nomorTelepon = list[0]["nomor_telepon"]; 
   }
   @override
   void initState() {
     super.initState();
     (() async {
-        await getDataAccount();
+         bannerAd = buildBanner()..load();
+         await getContentBerita();
         setState(() {
-                  
         });
     })();
   
   }
-  Future<bool> _onWillPop() {
-    if(backButton == true){
-      Navigator.of(context).pop(true);
-    }
+  @override
+  void dispose() {
+    bannerAd?.dispose();
+    super.dispose();
   }
-  List<Widget> formRender(BuildContext context) {
-    
-    SingleChildScrollView form = new SingleChildScrollView(
+
+
+   //Column1
+  Widget headerBerita() => Container(
+        height: deviceSize.height * 0.10,
+        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+              SizedBox(
+                height: 5.0,
+              ),
+              new Flexible(
+              child: new Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    new Text(
+                      judulBerita,
+                      style: TextStyle(
+                          fontSize: 20.0, fontWeight: FontWeight.w700, color: Colors.black),
+                    ),
+                  ],
+                ),
+              ),
+           
+          ],
+        ),
+      );
+
+  //column2
+
+  //column3
+    String chtml = '<h1>This is heading 1</h1> <h2>This is heading 2</h2><h3>This is heading 3</h3><h4>This is heading 4</h4><h5>This is heading 5</h5><h6>This is heading 6</h6><p><img alt="Test Image" src="https://i.ytimg.com/vi/RHLknisJ-Sg/maxresdefault.jpg" /></p>';
+  
+  Widget contentBerita() => Container(
+        height: deviceSize.height * 0.80,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: new SingleChildScrollView(
+              child: new Center(
+                child: new HtmlView(data: "<b><h3>$judulBerita</h3> </b>"+"\n"+contentBeritaHTML.toString()),
+              ),
+            ),
+          ),
+      );
+  //column4
+
+
+  Widget bodyData() { 
+    return SingleChildScrollView(
       child: Column(
         children: <Widget>[
-           new ListTile(
-            leading: const Icon(Icons.email),
-            title: new TextField(
-              onChanged: (String text) {
-                email = text;
-              },
-              controller: TextEditingController(
-                text: email
-              ),
-              keyboardType: TextInputType.emailAddress,
-              autofocus: false,
-              decoration: InputDecoration(
-                hintText: 'Email',
-              ),
-            ),
-          ),
-           new ListTile(
-            leading: const Icon(Icons.security),
-            title: new TextField(
-              onChanged: (String text) {
-                password = text;
-              },
-              controller: TextEditingController(
-                text: password
-              ),
-              obscureText: true,
-              autofocus: false,
-              decoration: InputDecoration(
-                hintText: 'Password',
-              ),
-            ),
-          ),
-           new ListTile(
-            leading: const Icon(Icons.security),
-            title: new TextField(
-              onChanged: (String text) {
-                passwordConfirm = text;
-              },
-              controller: TextEditingController(
-                text: passwordConfirm
-              ),
-              obscureText: true,
-              autofocus: false,
-              decoration: InputDecoration(
-                hintText: 'Confirm Password',
-              ),
-            ),
-          ),
-          new ListTile(
-            leading: const Icon(Icons.person),
-            title: new TextField(
-              onChanged: (String text) {
-                nama = text;
-              },
-              controller: TextEditingController(
-                text: nama
-              ),
-              keyboardType: TextInputType.text,
-              autofocus: false,
-              decoration: InputDecoration(
-                hintText: 'Name',
-              ),
-            ),
-          ),
-          new ListTile(
-            leading: const Icon(Icons.phone),
-            title: new TextField(
-              onChanged: (String text) {
-                nomorTelepon = text;
-              },
-              controller: TextEditingController(
-                text: nomorTelepon
-              ),
-              keyboardType: TextInputType.phone,
-              autofocus: false,
-              decoration: InputDecoration(
-                hintText: 'Phone Number',
-              ),
-            ),
-          ),
+          // headerBerita(),
+          // CommonDivider(),
+          contentBerita(),
+
+          // accountColumn()
         ],
       ),
     );
+  }
 
-    var l = new List<Widget>();
-    l.add(form);
-
-    if (showLoading) {
-      var modal = new Stack(
-        children: [
-          new Opacity(
-            opacity: 0.3,
-            child: const ModalBarrier(dismissible: false, color: Colors.grey),
-          ),
-          new Center(
-            child: new CircularProgressIndicator(),
-          ),
-        ],
+  Widget _scaffold() => CommonScaffold(
+        appTitle: "News",
+        bodyData: bodyData(),
+        showFAB: false,
+        // showDrawer: true,
+        floatingIcon: Icons.edit,
+        eventFloatButton: (){
+          // AlertDialog dialog = new AlertDialog(
+          //               content: new Text("Reload Activity")
+          //             );
+          // showDialog(context: context,child: dialog);
+          Navigator.of(context).pushNamed(UIData.editProfileRoute);
+        },
       );
-      l.add(modal);
-    }
 
-    return l;
-  }
+
+
   @override
-  Widget build(BuildContext context) { 
-    deviceSize = MediaQuery.of(context).size;
-      return new WillPopScope(
-      onWillPop: _onWillPop,
-      child: Scaffold(
-      appBar: new AppBar(
-        backgroundColor: Colors.black,
-        title: new Text("Edit Profile"),
-        actions: <Widget>[
-          new IconButton(icon: const Icon(Icons.save), onPressed: () {
-            if(email!="" && password != "" && passwordConfirm != "" && nama != "" && nomorTelepon != ""){
-              if(password != passwordConfirm ){
-                AlertDialog dialog = new AlertDialog(
-                      content: new Text("Confirm Password Tidak Sama ")
-                    );
-                showDialog(context : context, child: dialog);
-              }else{
-                setState(() {
-                      showLoading =true;
-                      backButton =false;
-                 });
-                var dataPost = {
-                  "email":email, 
-                  "password": passwordConfirm,
-                  "nama": nama,
-                  "nomorTelepon": nomorTelepon,
-                  "oldEmail": oldEmail,
-                  };
-                http.post(configClass.editProfile(), body: dataPost).then((response) {
-                    setState(() {
-                      showLoading =false;
-                      backButton =true;
-                    });
-                    final jsonResponse = json.decode(response.body.toString());
-                    String loginResponse ;
-                    Resp resp = new Resp.fromJson(jsonResponse);
-                    if(resp.result.err == ''){
-                      var db = new DatabaseHelper();
-                     
-                      var dataAccount = new Account(
-                        email,
-                        password,
-                        resp.result.content.nama,
-                        resp.result.content.nomor_telepon,
-                        int.tryParse(resp.result.content.saldo),
-                        1,
-                      );
-                      db.updateAccount(dataAccount);
-                      AlertDialog dialog = new AlertDialog(
-                        content: new Text("Update Profile Success")
-                      );
-                      showDialog(context: context,child: dialog);
-                      Navigator.pop(context);
-                      Navigator.pop(context);
-                      
-                    }else{
-                      loginResponse = resp.result.err;
-                      AlertDialog dialog = new AlertDialog(
-                        content: new Text(loginResponse)
-                      );
-                      showDialog(context: context,child: dialog);
-                    }
-
-                  });
-              }
-            }else{
-              AlertDialog dialog = new AlertDialog(
-                content: new Text("Semua Kolom Harus Di Isi")
-              );
-              showDialog(context: context,child: dialog);
-            }
-            
-
-          })
-        ],
-      ),
-      body:  Stack(
-                fit: StackFit.expand,
-                children: formRender(context)
-              )
-      ),
-    );
+  Widget build(BuildContext context) {
+    bannerAd.show();
     
+    deviceSize = MediaQuery.of(context).size;
+    return _scaffold();
   }
+
 }

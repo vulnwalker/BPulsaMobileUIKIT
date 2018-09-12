@@ -5,6 +5,7 @@ INJECTED from /home/kszxpo/AndroidStudioProjects/BPulsaMobileUIKIT/android/app/s
 INJECTED from /home/kszxpo/AndroidStudioProjects/BPulsaMobileUIKIT/android/app/src/main/AndroidManifest.xml:1:1-39:12
 INJECTED from /home/kszxpo/AndroidStudioProjects/BPulsaMobileUIKIT/android/app/src/main/AndroidManifest.xml:1:1-39:12
 MERGED from [:firebase_admob] /home/kszxpo/AndroidStudioProjects/BPulsaMobileUIKIT/build/firebase_admob/intermediates/manifests/full/debug/AndroidManifest.xml:2:1-9:12
+MERGED from [:shared_preferences] /home/kszxpo/AndroidStudioProjects/BPulsaMobileUIKIT/build/shared_preferences/intermediates/manifests/full/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:sqflite] /home/kszxpo/AndroidStudioProjects/BPulsaMobileUIKIT/build/sqflite/intermediates/manifests/full/debug/AndroidManifest.xml:2:1-11:12
 MERGED from [:share] /home/kszxpo/AndroidStudioProjects/BPulsaMobileUIKIT/build/share/intermediates/manifests/full/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:path_provider] /home/kszxpo/AndroidStudioProjects/BPulsaMobileUIKIT/build/path_provider/intermediates/manifests/full/debug/AndroidManifest.xml:2:1-7:12
@@ -153,6 +154,8 @@ INJECTED from /home/kszxpo/AndroidStudioProjects/BPulsaMobileUIKIT/android/app/s
 INJECTED from /home/kszxpo/AndroidStudioProjects/BPulsaMobileUIKIT/android/app/src/main/AndroidManifest.xml
 MERGED from [:firebase_admob] /home/kszxpo/AndroidStudioProjects/BPulsaMobileUIKIT/build/firebase_admob/intermediates/manifests/full/debug/AndroidManifest.xml:5:5-44
 MERGED from [:firebase_admob] /home/kszxpo/AndroidStudioProjects/BPulsaMobileUIKIT/build/firebase_admob/intermediates/manifests/full/debug/AndroidManifest.xml:5:5-44
+MERGED from [:shared_preferences] /home/kszxpo/AndroidStudioProjects/BPulsaMobileUIKIT/build/shared_preferences/intermediates/manifests/full/debug/AndroidManifest.xml:5:5-44
+MERGED from [:shared_preferences] /home/kszxpo/AndroidStudioProjects/BPulsaMobileUIKIT/build/shared_preferences/intermediates/manifests/full/debug/AndroidManifest.xml:5:5-44
 MERGED from [:sqflite] /home/kszxpo/AndroidStudioProjects/BPulsaMobileUIKIT/build/sqflite/intermediates/manifests/full/debug/AndroidManifest.xml:7:5-9:41
 MERGED from [:sqflite] /home/kszxpo/AndroidStudioProjects/BPulsaMobileUIKIT/build/sqflite/intermediates/manifests/full/debug/AndroidManifest.xml:7:5-9:41
 MERGED from [:share] /home/kszxpo/AndroidStudioProjects/BPulsaMobileUIKIT/build/share/intermediates/manifests/full/debug/AndroidManifest.xml:5:5-44
