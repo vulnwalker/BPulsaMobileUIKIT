@@ -9,14 +9,89 @@ import 'package:http/http.dart' as http;
 import 'package:bpulsa/database/DatabaseHelper.dart';
 import 'dart:convert';
 import 'package:bpulsa/database/model/account.dart';
-class TukarPoint extends StatelessWidget {
+import 'package:firebase_admob/firebase_admob.dart';
+const APP_ID = "<Put in your Device ID>";
+class TukarPoint extends StatefulWidget {
+  @override
+  TukarPointState createState() {
+    return new TukarPointState();
+  }
+}
+
+class TukarPointState extends State<TukarPoint> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   String email,password,passwordConfirm,nama,nomorTelepon = "";
   String oldEmail ;
+  String publicAdsName ;
   int saldoMember;
   ConfigClass configClass = new ConfigClass();
   var databaseHelper = new  DatabaseHelper() ;
+  
+  static final MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
+    testDevices: APP_ID != null ? [APP_ID] : null,
+    keywords: ['Games', 'Puzzles'],
+  );
+  void loadVideoAds(adsUnit) {
+    RewardedVideoAd.instance.load(
+      adUnitId: RewardedVideoAd.testAdUnitId,
+      targetingInfo: targetingInfo,
+    );
+  }
+  @override
+  void initState() {
+    super.initState();
+    (() async {
+      var asu = await getDataAccount();
+      setState(() {
+      });
+    })();
 
+    FirebaseAdMob.instance.initialize(appId: FirebaseAdMob.testAppId);
+    RewardedVideoAd.instance.listener =
+        (RewardedVideoAdEvent event, {String rewardType, int rewardAmount}) {
+      print("RewardedVideoAd event $event");
+      if (event == RewardedVideoAdEvent.failedToLoad) {
+
+      } 
+      if(event == RewardedVideoAdEvent.loaded){
+
+        RewardedVideoAd.instance.show();
+        print("Iklan terload");
+      }
+
+      //onRewardedVideo
+      if(event == RewardedVideoAdEvent.closed){
+      }
+
+    };
+  }
+
+  void postReward(adsName){
+       var dataPost = {
+                   "email":email, 
+                   "adsName":adsName, 
+             };
+
+        http.post(configClass.requestAds(), body: dataPost).then((response) {
+
+        var extractdata = JSON.decode(response.body);
+        List dataResult;
+        List dataContent;
+        String err,cek;
+        dataResult = extractdata["result"];
+        err = dataResult[0]["err"];
+        cek = dataResult[0]["cek"];
+        dataContent = dataResult[0]["content"];
+        print("ADS NAME  "+response.body);
+          if(err == ""){
+            publicAdsName = adsName;
+            loadVideoAds(dataContent[0]["ads_unit"]);
+       
+          }else{
+          }                
+
+        });
+     }
   void getDataAccount() async{
     var dbClient = await databaseHelper.db;
         List<Map> list = await dbClient.rawQuery('SELECT * FROM tabel_account');
@@ -177,6 +252,8 @@ class TukarPoint extends StatelessWidget {
                           content: new Text("Tukar Point Berhasil, tunggu konfirmasi dari kami")
                         );
                         showDialog(context: context,child: dialog);
+                        postReward("TRADE POINT");
+                        
                       }else{
                         AlertDialog dialog = new AlertDialog(
                           content: new Text( dataResult[0]["err"] )
@@ -186,11 +263,7 @@ class TukarPoint extends StatelessWidget {
 
                       }
                         
-                      
                     });
-                   
-               
-
 
                 })();
                 
@@ -211,7 +284,6 @@ class TukarPoint extends StatelessWidget {
             )
             ..show(context);
   }
-
   @override
   Widget build(BuildContext context) {
     return CommonScaffold(

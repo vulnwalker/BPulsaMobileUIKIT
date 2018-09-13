@@ -55,6 +55,8 @@ flutter:
    - assets/loginImage.png
    - assets/logo.png
    - assets/bg.png
+   - assets/images/calendar.png
+   - assets/images/clock.png
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -82,6 +84,13 @@ flutter:
         - asset: assets/fonts/Raleway-Regular.ttf
           style: normal
         - asset: assets/fonts/Raleway-Medium.ttf
+    
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Poppins-Regular.ttf
+          weight: 400
           
   #
   # For details regarding fonts from package dependencies,
