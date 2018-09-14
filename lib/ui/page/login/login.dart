@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'package:bpulsa/database/DatabaseHelper.dart';
 import 'package:bpulsa/database/model/account.dart';
 import 'package:bpulsa/utils/uidata.dart';
+import 'package:device_info/device_info.dart';
 ConfigClass configClass = new ConfigClass();
 
 class LoginPage extends StatefulWidget {
@@ -16,6 +17,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   String email,password = "";
+  String deviceUniqueKey = "";
   final TextEditingController _emailController = new TextEditingController();
   final TextEditingController _passController = new TextEditingController();
   var databaseHelper = new  DatabaseHelper() ;
@@ -29,8 +31,10 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
     (() async {
         await logoutProcess();
+        DeviceInfoPlugin deviceInfo = new DeviceInfoPlugin();
+        AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+        deviceUniqueKey =androidInfo.manufacturer+";"+androidInfo.model.toString()+";"+androidInfo.hardware.toString()+";"+androidInfo.id.toString()+";"+androidInfo.supported64BitAbis.toString()+";"+androidInfo.supported32BitAbis.toString()+";"+androidInfo.device.toString()+";"+androidInfo.type.toString()+";"+androidInfo.host.toString()+";"+androidInfo.fingerprint.toString();
         setState(() {
-                  
         });
     })();
   
@@ -92,7 +96,7 @@ class _LoginPageState extends State<LoginPage> {
           height: 42.0,
           onPressed: (){
              configClass.showLoading(context);
-             http.post(configClass.auth(), body: {"email":_emailController.text, "password": _passController.text}).then((response) {
+             http.post(configClass.auth(), body: {"email":_emailController.text, "password": _passController.text, "deviceCode": deviceUniqueKey}).then((response) {
                 configClass.closeLoading(context);
                 final jsonResponse = json.decode(response.body.toString());
                 String loginResponse ;
